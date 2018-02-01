@@ -1,0 +1,73 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\author{Kevin Mambu}
+\date{\today}
+
+\title{PERI \\ Gestion des Périphériques \\ Cours 1 - Introduction}
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+Enseignants :
+\begin{itemize}
+  \item Franck Wajsbürt
+  \item Lionel Lacasagne
+\end{itemize}
+
+A la base, le module s'intéressait à aux bs de communications de l'Ordinateur (
+bus PCI, bridges, etc.).\\
+Les bus systèmes sont de moins en moins exposés $\Rightarrow$ switch vers l'étude
+de réseaux sur puce, systèmes embarqués sans fil, IoT.\\
+
+Pré-requis l'élaboration d'un système :
+\begin{itemize}
+  \item Définition des besoins du dispositif, pour élaborer des solutions
+  \item Maîtrise de conception matérielle
+  \item Maîtrise de conception logicielle
+  \item Maîtrise de conception système
+\end{itemize}
+
+Points abordés :
+\begin{itemize}
+  \item Drivers Linux
+  \item Communication proccess
+  \item Communication sans fil
+  \item Plate-forme Arduino
+  \item Programmation basse consommation
+\end{itemize}
+
+\section{Présentation du projet semestriel}
+
+On aura des capteurs sans fil relié sur un module (Arduino) communicant par un
+relais sans fil (un Raspberry Pi) et qui aura à charge de retransmettre des
+informations.\\
+Les capteurs sont respectivement à technologie Bluetooth \& nRF24L01. Le dernier
+dispose de certains avantages : il est moins onéreux en qualité de composants et
+décrit un protocole de transfert de paquets plus simplifié. La technologie
+Bluetooth est plus automatisé.
+Certains modules integrent directement un SoC, comme un $\mu$-controlleur, d'autres
+doivent passer par un module annexe.\\
+On s'est abstenu d'utiliser la technologie Wi-Fi pour certaines raisons : il s'agit
+d'une technologie onéreuse d'un point de vue énergétique (100mA de consommé pour
+une connection).\\
+On mettra sur la RPi une Gateway Pi $\rightarrow$ Modules et on va y installer un
+serveur afin de communiquer avec des clients sur le web via connection ethernet.
+Il y aura en conséquence une partie gestion des clients et des bases de données.\\
+Pednant la programmation de ces modules sur RPi, il faudra faire des choix
+logiciels dans la programmation. $\Rightarrow$ programmation consciente de la
+consommation énergétique.\\
+Idée de Franck $\rightarrow$ utiliser une capacité en déchargement pour réduire
+la consommation.\\
+Même avec le système opérationnel matériellement, il faudra appliquer des filtres
+et un nettoyage du bruit, pour bonne emission de l'information. Néanmoins, ces
+opérations de filtrage sont coûteuses énergétiquement, il faudra donc faire
+compromis. Une fois ces filtres fait sur RPi, il faudra les restituer sur le
+module Arduino.
+\end{document}
