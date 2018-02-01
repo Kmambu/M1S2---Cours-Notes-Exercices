@@ -1,0 +1,10 @@
+# LaTeX optional files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+*.toc
+
+# C optional files
+*.o
