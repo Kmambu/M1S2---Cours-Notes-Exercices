@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.12.25)  1 FEB 2018 08:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.12.25)  1 FEB 2018 10:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**cours1.tex
-(./cours1.tex
+**pnl.tex
+(./pnl.tex
 LaTeX2e <2017-04-15>
 Babel <3.15> and hyphenation patterns for 84 language(s) loaded.
 (/usr/share/texmf-dist/tex/latex/base/article.cls
@@ -354,21 +354,21 @@ File: pdftex.def 2017/06/24 v1.0g Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
-) (./cours1.aux)
-\openout1 = `cours1.aux'.
+) (./pnl.aux)
+\openout1 = `pnl.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
  (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count87
@@ -424,98 +424,98 @@ Package grfext Info: Graphics extension search list:
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 10.
+(Font)              <12> on input line 11.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 10.
+(Font)              <8> on input line 11.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 10.
+(Font)              <6> on input line 11.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./cours1.toc
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./pnl.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 2.
 )
 \tf@toc=\write3
-\openout3 = `cours1.toc'.
+\openout3 = `pnl.toc'.
 
- [2]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 29.
+ [2] (./cours1/file.tex
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 13.
  (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 29.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 13.
 
-Overfull \hbox (23.6025pt too wide) in paragraph at lines 42--45
+Overfull \hbox (23.6025pt too wide) in paragraph at lines 26--29
 \OT1/cmr/m/n/10 Qu'est ce qu'un syst^^Reme d'exploitation, en essence? $\OMS/cmsy/m/n/10 )$ \OT1/cmr/m/n/10 Un ges-tion-naire d'interruption.
  []
 
-<./pics/cours1/cours1_monolith.png, id=14, 425.59pt x 752.8125pt>
-File: ./pics/cours1/cours1_monolith.png Graphic file (type png)
-<use ./pics/cours1/cours1_monolith.png>
-Package pdftex.def Info: ./pics/cours1/cours1_monolith.png  used on input line 48. on input line 48.
-Package pdftex.def Info: Requested size: 160.85568pt x 284.52756pt on input line 48.
-[3] [4 <./pics/cours1/cours1_monolith.png>]
-Overfull \hbox (6.38843pt too wide) in paragraph at lines 78--80
+<cours1/pics/cours1_monolith.png, id=14, 425.59pt x 752.8125pt>
+File: cours1/pics/cours1_monolith.png Graphic file (type png)
+<use cours1/pics/cours1_monolith.png>
+Package pdftex.def Info: cours1/pics/cours1_monolith.png  used on input line 32. on input line 32.
+Package pdftex.def Info: Requested size: 160.85568pt x 284.52756pt on input line 32.
+[3] [4 <./cours1/pics/cours1_monolith.png>]
+Overfull \hbox (6.38843pt too wide) in paragraph at lines 62--64
 []\OT1/cmr/m/n/10 Utilisation du noyau mono-lithique $\OMS/cmsy/m/n/10 )$ \OT1/cmr/m/n/10 em-barqu^^Se, ap-pli-ca-tions RT ou sp^^Secifique. 
  []
 
-<pics/cours1/cours1_micro.png, id=24, 479.7925pt x 934.49126pt>
-File: pics/cours1/cours1_micro.png Graphic file (type png)
-<use pics/cours1/cours1_micro.png>
-Package pdftex.def Info: pics/cours1/cours1_micro.png  used on input line 84. on input line 84.
-Package pdftex.def Info: Requested size: 146.08391pt x 284.52756pt on input line 84.
+<cours1/pics/cours1_micro.png, id=24, 479.7925pt x 934.49126pt>
+File: cours1/pics/cours1_micro.png Graphic file (type png)
+<use cours1/pics/cours1_micro.png>
+Package pdftex.def Info: cours1/pics/cours1_micro.png  used on input line 68. on input line 68.
+Package pdftex.def Info: Requested size: 146.08391pt x 284.52756pt on input line 68.
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--90
-
- []
-
-<pics/cours1/cours1_monolithmod.png, id=25, 538.01pt x 752.8125pt>
-File: pics/cours1/cours1_monolithmod.png Graphic file (type png)
-<use pics/cours1/cours1_monolithmod.png>
-Package pdftex.def Info: pics/cours1/cours1_monolithmod.png  used on input line 102. on input line 102.
-Package pdftex.def Info: Requested size: 203.34587pt x 284.52756pt on input line 102.
-[5 <./pics/cours1/cours1_micro.png>]
-<pics/cours1/cours1_micromod.png, id=30, 521.95pt x 934.49126pt>
-File: pics/cours1/cours1_micromod.png Graphic file (type png)
-<use pics/cours1/cours1_micromod.png>
-Package pdftex.def Info: pics/cours1/cours1_micromod.png  used on input line 121. on input line 121.
-Package pdftex.def Info: Requested size: 158.91974pt x 284.52756pt on input line 121.
-<pics/cours1/cours1_mach.png, id=31, 475.7775pt x 934.49126pt>
-File: pics/cours1/cours1_mach.png Graphic file (type png)
-<use pics/cours1/cours1_mach.png>
-Package pdftex.def Info: pics/cours1/cours1_mach.png  used on input line 122. on input line 122.
-Package pdftex.def Info: Requested size: 144.86145pt x 284.52756pt on input line 122.
- [6 <./pics/cours1/cours1_monolithmod.png>]
-<pics/cours1/cours1_exo.png, id=36, 427.5975pt x 547.04375pt>
-File: pics/cours1/cours1_exo.png Graphic file (type png)
-<use pics/cours1/cours1_exo.png>
-Package pdftex.def Info: pics/cours1/cours1_exo.png  used on input line 135. on input line 135.
-Package pdftex.def Info: Requested size: 222.40417pt x 284.52756pt on input line 135.
- [7 <./pics/cours1/cours1_micromod.png> <./pics/cours1/cours1_mach.png>]
-<pics/cours1/cours1_uni.png, id=43, 427.5975pt x 429.605pt>
-File: pics/cours1/cours1_uni.png Graphic file (type png)
-<use pics/cours1/cours1_uni.png>
-Package pdftex.def Info: pics/cours1/cours1_uni.png  used on input line 141. on input line 141.
-Package pdftex.def Info: Requested size: 283.20042pt x 284.52756pt on input line 141.
- [8 <./pics/cours1/cours1_exo.png>] [9 <./pics/cours1/cours1_uni.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 150--154
+Underfull \hbox (badness 10000) in paragraph at lines 70--74
 
  []
 
-[10] (./cours1.aux) ) 
+<cours1/pics/cours1_monolithmod.png, id=25, 538.01pt x 752.8125pt>
+File: cours1/pics/cours1_monolithmod.png Graphic file (type png)
+<use cours1/pics/cours1_monolithmod.png>
+Package pdftex.def Info: cours1/pics/cours1_monolithmod.png  used on input line 86. on input line 86.
+Package pdftex.def Info: Requested size: 203.34587pt x 284.52756pt on input line 86.
+[5 <./cours1/pics/cours1_micro.png>]
+<cours1/pics/cours1_micromod.png, id=30, 521.95pt x 934.49126pt>
+File: cours1/pics/cours1_micromod.png Graphic file (type png)
+<use cours1/pics/cours1_micromod.png>
+Package pdftex.def Info: cours1/pics/cours1_micromod.png  used on input line 105. on input line 105.
+Package pdftex.def Info: Requested size: 158.91974pt x 284.52756pt on input line 105.
+<cours1/pics/cours1_mach.png, id=31, 475.7775pt x 934.49126pt>
+File: cours1/pics/cours1_mach.png Graphic file (type png)
+<use cours1/pics/cours1_mach.png>
+Package pdftex.def Info: cours1/pics/cours1_mach.png  used on input line 106. on input line 106.
+Package pdftex.def Info: Requested size: 144.86145pt x 284.52756pt on input line 106.
+ [6 <./cours1/pics/cours1_monolithmod.png>]
+<cours1/pics/cours1_exo.png, id=36, 427.5975pt x 547.04375pt>
+File: cours1/pics/cours1_exo.png Graphic file (type png)
+<use cours1/pics/cours1_exo.png>
+Package pdftex.def Info: cours1/pics/cours1_exo.png  used on input line 119. on input line 119.
+Package pdftex.def Info: Requested size: 222.40417pt x 284.52756pt on input line 119.
+ [7 <./cours1/pics/cours1_micromod.png> <./cours1/pics/cours1_mach.png>]
+<cours1/pics/cours1_uni.png, id=43, 427.5975pt x 429.605pt>
+File: cours1/pics/cours1_uni.png Graphic file (type png)
+<use cours1/pics/cours1_uni.png>
+Package pdftex.def Info: cours1/pics/cours1_uni.png  used on input line 125. on input line 125.
+Package pdftex.def Info: Requested size: 283.20042pt x 284.52756pt on input line 125.
+ [8 <./cours1/pics/cours1_exo.png>] [9 <./cours1/pics/cours1_uni.png>])
+Underfull \hbox (badness 10000) in paragraph at lines 134--19
+
+ []
+
+[10] (./pnl.aux) ) 
 Here is how much of TeX's memory you used:
- 1804 strings out of 492985
- 23978 string characters out of 6138637
+ 1806 strings out of 492985
+ 23962 string characters out of 6138637
  80526 words of memory out of 5000000
  5346 multiletter control sequences out of 15000+600000
  7895 words of font info for 28 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,6n,25p,273b,189s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,6n,25p,270b,189s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on cours1.pdf (10 pages, 230999 bytes).
+Output written on pnl.pdf (10 pages, 230999 bytes).
 PDF statistics:
  76 PDF objects out of 1000 (max. 8388607)
  43 compressed objects within 1 object stream

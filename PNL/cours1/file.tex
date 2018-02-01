@@ -1,19 +1,3 @@
-\documentclass[10pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\author{Kevin Mambu}
-\date{\today}
-
-\title{M1 SAR 2017-2018\\Programmation Noyau Linux\\Cours 1 - Introduction}
-
-\begin{document}
-\maketitle
-
-\newpage
-\tableofcontents
-
-\newpage
-
 \section{Introduction}
 
 \subsection{Avertissement}
@@ -45,7 +29,7 @@ Il y a quatres types de Noyau:
 
 \subsection{Noyaux monolithiques}
 \begin{center}
-  \includegraphics[height=10cm]{./pics/cours1/cours1_monolith.png}
+  \includegraphics[height=10cm]{cours1/pics/cours1_monolith.png}
 \end{center}
 Un noyau compilé statiquement, sur un seul binaire (UNICSV6 par exemple).
 \\
@@ -81,7 +65,7 @@ spécifique.
 \subsection{Micro-noyaux}
 
 \begin{center}
-  \includegraphics[height=10cm]{pics/cours1/cours1_micro.png}
+  \includegraphics[height=10cm]{cours1/pics/cours1_micro.png}
 \end{center}
 Idée : Réduire le noyau à un set de fonctionnalités fondamentales, et mettre les
 autres services en mode utilisateurs. On réduit la surface d'attaque du
@@ -99,7 +83,7 @@ Inconvénients :
 \end{itemize}
 \subsection{Noyaux modulaires monolithiques}
 \begin{center}
-  \includegraphics[height=10cm]{pics/cours1/cours1_monolithmod.png}
+  \includegraphics[height=10cm]{cours1/pics/cours1_monolithmod.png}
 \end{center}
 Avoir un noyau monolithique auquel on peut charger des modules.
 Intérêts :
@@ -118,8 +102,8 @@ Nb : il est possible de hard link des modules pour faire de la programmation
 monolithique.
 \subsection{Micro-noyaux modulaires}
 \begin{center}
-  \includegraphics[height=10cm]{pics/cours1/cours1_micromod.png}
-  \includegraphics[height=10cm]{pics/cours1/cours1_mach.png}
+  \includegraphics[height=10cm]{cours1/pics/cours1_micromod.png}
+  \includegraphics[height=10cm]{cours1/pics/cours1_mach.png}
 \end{center}
 Possibilité d'avoir d'une part des services haut-niveau opérés en mode utilisateur
 et un micro-noyau modulaire. Cela permet de combiner les avantages de modularités
@@ -132,13 +116,13 @@ Pourquoi BSD : problème de licence. Si on utlisait GNU Linux, il y aurait
 obligation de laisser les codes sources sous GNU libres.
 \subsection{Exo-noyau}
 \begin{center}
-  \includegraphics[height=10cm]{pics/cours1/cours1_exo.png}
+  \includegraphics[height=10cm]{cours1/pics/cours1_exo.png}
 \end{center}
 Le noyau est réduit à l'interception et redirection d'interruptions. Les applications
 ont la charge de la gestion de la mémoire et des périphériques.
 \subsection{Uni-Kernel}
 \begin{center}
-  \includegraphics[height=10cm]{pics/cours1/cours1_uni.png}
+  \includegraphics[height=10cm]{cours1/pics/cours1_uni.png}
 \end{center}
 Une seule application en exécution dans le noyau. En vogue dans le domaine des
 syst\`emes embarqu\'es. Ces uni-kernels sont ensuite encapsul\'ees en VM, et
@@ -151,5 +135,3 @@ Le nom UNIX fait réference au syst\`eme d'exploitation MULTICS (MULTiplexed
 Information and Computing System) issu d'une collaboration entre le MIT, Bell
 \& General Electric.
 Plusieurs rumeurs tounre autour de l'origine du mot.\\
-
-\end{document}
