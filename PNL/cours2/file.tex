@@ -1,0 +1,56 @@
+\section{Linux : Une architecture en oignon}
+
+\subsection{Explicatoin du schema}
+Chaque point représente chaque composante du noyau, et chaqu'une de ses
+dépendances. $\Rightarrow$ On parle là d'une structure en oignon, avec au centre
+le noyau et plus on s'éloigne, plus on remonte en niveau.\\
+Même das le cas d'un $\mu$-noyau, on parle d'un $\mu$-noyau enrichi lorsqu'il est appairé
+à l'ensemble de ses services (ex : Mach(enrichi) = NoyauBSD + $\mu$-noyau).\\
+Pour comprendre cette structure, on va énumérer 5 services offerts par le noyau :
+\begin{itemize}
+  \item La gestion du stockage
+  \item La gestion des processus (execution concurrente, multi-programmation)
+  \item La gestion de la mémoire
+  \item La gestion du réseau : la pile IP est fournie par le noyau
+  \item L'interface avec l'utilisateur*
+\end{itemize}
+De ce partitionnement, on peut modéliser un plan du noyau, une {\bf Kernel Map}.
+
+\begin{center}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+     & {\bf Système} & {\bf Réseau} & {\bf Stockage} & {\bf Mem} & {\bf Processus} \\ \hline
+     {\bf API Apps/Kern} & Syscalls & Sockets & Fichiers & Accès Mem/mmap & Processus\\ \hline
+     {\bf Services Abstr.} & Kobject/Submodule& Familles Prot. & VFS* & Vmalloc & Thread \\ \hline
+     {\bf Services} & Modules & Protocoles & Filesystems & Kmalloc & Scheds \\ \hline
+     \hline
+     {\bf HW Abstraction }& Generic HW & Device Res & Blocks & PFRA & Interrupt\\ \hline
+     {\bf API Kern/Hard} & Driver Bus & Driver Carte Res & Driver Disk & Table des Pages & CPU-specific \\ \hline
+     \hline
+    {\bf Matériel} & Bus (USB/PLIE) & Cartes Res. & Disk/Band & RAM/MMU/TLB & CPU \\ \hline
+  \end{tabular}
+  \newline{}
+  {\it Abstraction d'une K-Map}
+\end{center}
+
+Il y a des interactions entre colonnes mais on retrouve la même structure au sein
+d'un même colonne.\\
+Vers le as de la map, on va trouver les choses les plus bas-niveau, eg. quels
+matériels ovnt êrtre gérés par le noyau.\\
+Nb 1 : GMail omet progressivement la notion de répertoire au profit de tags et de
+métadonnées. Il existe d'aiileurs des propositions pour changer les arborescences
+de fichiers pour des bases de données.\\
+Factoriser du code au niveau des drivers est très fastidieux, on a donc intérêt à
+laisser de la marge. $\rightarrow$ utilisation d'abstractions\\
+PFRA : (Page Frame Reclaim Allocator) réclamation de mémoire\\
+Tâche : Programme + Données à traiter.\\
+Processus : Fils d'exécution, une famille de threads avec la particularité de
+partager le même tas.\\
+VFS : Virtual Filesystem (DirEntry, Inode) (WARN : ne pas confondre le VFS, les
+codes génériques de tous les filesystems avec les RAMFS, les filesystems
+{\bf réellement} virtuels)\\
+NFS : TODO \\
+Page Cache : Cache des processus, les processus sont chargés en mémoire.\\
+Encapsulation de données : Bloc $\rightarrow$ Page $\rightarrow$ Page Frame\\
+Dans les processus Intel : il est possible d'associer en Hardware des PIDs (utilisé
+pour le correctif Meltdown)
