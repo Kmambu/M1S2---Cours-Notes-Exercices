@@ -1,0 +1,38 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\author{Kevin Mambu}
+\date{\today}
+
+\title{M1 SESI 2017-2018\\Architecture Multi-Processeurs\\TP1 : Prototypage Virtuel}
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents
+
+\newpage
+
+\section{Énoncé du TP}
+Le sujet de ce TP sera le prototypage virtuel, de la simulation extremement fidèle
+du système.
+L'idée est de reproduire le comportement d'un ordinateur au cycle près et au bit près.
+
+\section{Mode opératoire}
+On "construit" une machine complète avec son/ses processeur-s en inteconnectant
+entre eux tous les composants matériels d'une vraie machine. \\
+Ces composants existent déjà au sein d'une bibliothèque du domaine public appelée
+SoClib, utilisant le langage SYSTEM_C (C++). On aura un processeur de fourni et on
+développera, dans un premier temps en MIPS32 puis en C, des programmes à executer
+sur notre prototype virtuel.\\
+
+\begin{itemize}
+  \item Machine simulante : 1GHz (1 milliard inst/s)
+  \item Prototype virtuel : 1Mhz (1 million inst/s)
+\end{itemize}
+
+Le prototype est de plus faible cadençage afin de pouvoir rendre l'évolution de la
+machine plus macroscopique (on peut faire évoluer le système cycle par cycle) et de
+pouvoir inspecter de manière plus fine.
+\end{document}
