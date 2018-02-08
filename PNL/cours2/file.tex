@@ -1,21 +1,20 @@
 \section{Linux : Une architecture en oignon}
 
 \subsection{Explicatoin du schema}
-Chaque point représente chaque composante du noyau, et chaqu'une de ses
+Chaque point représente chaque composante du noyau et chaqu'une de ses
 dépendances. $\Rightarrow$ On parle là d'une structure en oignon, avec au centre
-le noyau et plus on s'éloigne, plus on remonte en niveau.\\
+le noyau et plus on s'éloigne, plus on monte en niveau d'abstration.\\
 Même das le cas d'un $\mu$-noyau, on parle d'un $\mu$-noyau enrichi lorsqu'il est appairé
 à l'ensemble de ses services (ex : Mach(enrichi) = NoyauBSD + $\mu$-noyau).\\
 Pour comprendre cette structure, on va énumérer 5 services offerts par le noyau :
 \begin{itemize}
-  \item La gestion du stockage
-  \item La gestion des processus (execution concurrente, multi-programmation)
-  \item La gestion de la mémoire
-  \item La gestion du réseau : la pile IP est fournie par le noyau
-  \item L'interface avec l'utilisateur*
+  \item La gestion du stockage.
+  \item La gestion des processus (execution concurrente, multi-programmation).
+  \item La gestion de la mémoire.
+  \item La gestion du réseau : la pile IP est fournie par le noyau.
+  \item L'interface avec l'utilisateur*.
 \end{itemize}
 De ce partitionnement, on peut modéliser un plan du noyau, une {\bf Kernel Map}.
-
 \begin{center}
   \begin{tabular}{|c|c|c|c|c|c|}
     \hline
@@ -35,9 +34,9 @@ De ce partitionnement, on peut modéliser un plan du noyau, une {\bf Kernel Map}
 
 Il y a des interactions entre colonnes mais on retrouve la même structure au sein
 d'un même colonne.\\
-Vers le as de la map, on va trouver les choses les plus bas-niveau, eg. quels
-matériels ovnt êrtre gérés par le noyau.\\
-Nb 1 : GMail omet progressivement la notion de répertoire au profit de tags et de
+Vers le bas de la map, on va trouver les choses les plus bas-niveau, e.g. quels
+matériels vont être gérés par le noyau.\\
+Nb : GMail omet progressivement la notion de répertoire au profit de tags et de
 métadonnées. Il existe d'aiileurs des propositions pour changer les arborescences
 de fichiers pour des bases de données.\\
 Factoriser du code au niveau des drivers est très fastidieux, on a donc intérêt à
