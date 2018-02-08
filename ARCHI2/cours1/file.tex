@@ -3,41 +3,37 @@ Responsable : Alain Grener, alain.grener@lip6.fr
 
 Problématique de l'UE : synchronisation de plusieurs composants dans une architecture
 multi-processeur. Exemple : accès du même périphérique par plusieurs processeurs.
-
 Observer le moyen de communicaiton entre processeurs et l''environnement des
 processeurs.
-
 Un processeur pipeline reste synchronisé : plusieurs instructions sur le même flux
 de transition. Dans le cas d'nue architecture multi-processeurs $\Rightarrow$
-les unités ssont nativement asynchrones, mais doivent se synchroniser.
+les unités sont nativement asynchrones, mais doivent se synchroniser.
 
 \section{Automates d'Etats Finis Communiquants Synchrones}
 
 Il s'agit d'un modèle mathématique, qui permet de décrire tous les systèmes
 matériels numériques.
-
 "Les états" ici est l'ensemble des valeurs intégrés à l'automate des ensembles
-mémorisants. Un état est une valeur stockée dans les registres.
+mémorisants. Un état est une valeur stockée dans les registres.\\
 
 Exemple avec le processeur MIPS32 : comptons le banc de registres, PC, HI, LO, etc.
 On peut comptabiliser environ 50 registres, dans ce cas le processeur MIPS32
 possède $2^{50}$ états.
 
 À chaque front montant, on met à jour l'ensemble des registres internes.
-Les sorties d'un automate sont les entrées d'un autre
+Les sorties d'un automate sont les entrées d'un autre.
 Un automate porduit est l'ensemble des sous-systèmes (automates). \\
 
 
 \begin{center}
-
-  \includegraphics[height=6cm]{cours1/pics/automata.png}
+  \includegraphics[height=6cm]{cours1/pics/automata.png}\\
   \(S_i=g_i(E_0,E_1,...,E_{(N-1)},R_0, R_1,...,R_{(P-1)}\), \\
   M fonctions booléennes dépendant de $N+P$ bits. \\
   \(NR_k=T_k(E_0,E_1,...,E_{(N-1)},R_0, R_1,...,R_{(P-1)}\), \\
   P fonctions booléennes dépendant de $N+P$ bits. \\
 \end{center}
 
-Pour décrire complètement le comportement d'un automate particulier, il faut :
+Pour décrire complètement le comportement d'un automate particulier, il faut déterminer:
 \begin{enumerate}
   \item quelles valeurs vont prendre les sorties en fonction des entrées $E_i$ et
   de l'état. $\Rightarrow$ décrire un système séquentiel (à mémoire).
@@ -48,7 +44,6 @@ Pour décrire complètement le comportement d'un automate particulier, il faut :
 \end{enumerate}
 
 \subsection{Automates de Mealy vs Automates de Moore}
-
 \begin{center}
   \includegraphics[height=6cm]{cours1/pics/mealy.png}
   \\La géneration de la sortie dépend de l'état de transition et des entrées
@@ -60,14 +55,14 @@ Pour décrire complètement le comportement d'un automate particulier, il faut :
 \end{center}
 Avantages de l'Automate de Moore :
 \begin{itemize}
-  \item Cet automate est facilement prédictible (synchronisation assurée)
+  \item Facilement prédictible (synchronisation assurée)
   \item Beaucoup plus stable sur la propagation de l'information
 \end{itemize}
 Inconvénients :
 \begin{itemize}
   \item Moins réactif
 \end{itemize}
-Le plus long chein possible est le tmeps de cycle minimal d'un registre à un
+Le plus long chemin possible est le temps de cycle minimal d'un registre à un
 autre.
 \begin{center}
   \includegraphics[height=10cm]{cours1/pics/chrono.png}
@@ -78,12 +73,12 @@ autre.
 Toute l'industrie de la CAO repose sur la technologie des FSM. \\
 $\Rightarrow$ Par extension, toute l'industrie du High-Tech.
 
-\subsection{ETAPE A}
-Définition des "états abstraits"
+{\bf ETAPE A:}\\
+Définition des "états abstraits".
 Il s'agit d'identifier les états avec des symboles et faire abstraction de leur
 description pour leur nomination.
 
-\subsection{ETAPE B}
+{\bf ETAPE B:}\\
 Représentation abstraite du graphe de transition.\\
 Il va s'agir d'un graphe orienté dont on doit précisément spécifier :
 \begin{itemize}
@@ -110,16 +105,16 @@ Il va s'agir d'un graphe orienté dont on doit précisément spécifier :
   \end{center}
 \end{itemize}
 
-\subsection{ETAPE C}
-Choix d'un codage des états
+{\bf ETAPE C:}\\
+Choix d'un codage des états.
 
-\subsection{ETAPE D}
-Traduction du graphe en table de vérité
+{\bf ETAPE D:}\\
+Traduction du graphe en table de vérité.
 
-\subsection{ETAPE E}
+{\bf ETAPE E:}\\
 Déterminer les équations booléennes simplifiées.
 
-\subsection{ETAPE F}
+{\bf ETAPE F:}\\
 Traduction en portes logiques
 
 \subsection{Exemple : capteur de trois '1' consécutifs, MOORE}

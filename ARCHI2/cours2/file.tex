@@ -3,13 +3,15 @@
 
 Le bus permettant d'interconnecter les processeurs avec les autres composants.
 \begin{center}
-  \includegraphics[height=6cm]{cours2/pics/bus.jpg}
+  \includegraphics[height=11cm]{cours2/pics/bus.jpg}
 \end{center}
 De nos jours, le bus ne se contente plus d'être une simple nappe de fils, il s'agit d'un
 réseau d'interconnection sur puce. Le bus est devenu un composant crucial des
 machines.
 \begin{center}
-  \includegraphics[height=6cm]{cours2/pics/modern.jpg}
+  \includegraphics[height=5cm]{cours2/pics/modern.jpg}\\
+  {\it Le North Bridge fait transiter les données vers la RAM, le South Bridge
+  vers le bus périphérique. Tous deux sont des contrôleurs sur puce.}
 \end{center}
 
 \section{Fonctions d'un bus}
@@ -24,7 +26,7 @@ machines.
     \item arbitrage entre les cibles
   \end{itemize}
 \end{enumerate}\begin{center}
-  \includegraphics[height=6cm]{cours2/pics/bcu.jpg}
+  \includegraphics[height=11cm]{cours2/pics/bcu.jpg}
 \end{center}
 {\it\bf transaction} : paire d'une commande d'un maître et d'une réponse de la cible.\\
 Cela est vrai pour les lectures {\bf et} les écritures, et ce afin de :
@@ -46,8 +48,5 @@ Pour une définition plus basse, un bus est un signal connecté à plusieurs ém
 un et un seul de ces émetteurs est non-bloqué à la fois. On parle d'un {\bf signal
 bus'é}.
 \begin{center}
-  \includegraphics[height=6cm]{cours2/pics/mem.jpg}
-  \newline{}
-  {\it Le North Bridge fait transiter les données vers la RAM, le South Bridge
-  vers le bus périphérique. Tous deux sont des contrôleurs sur puce.}
+  \includegraphics[height=13cm]{cours2/pics/mem.jpg}\\
 \end{center}
