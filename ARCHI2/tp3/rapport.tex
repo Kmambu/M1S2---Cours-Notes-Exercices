@@ -88,7 +88,7 @@ serait présent. Donc 7 instructions par itération de boucle.
 \section{Question D2}
 Le premier MISS d'instruction est le MISS mandataire pour le chargement du code
 du {\it main} :
-\lstinputlisting[firstline=8,lastline=8]{app.bin.txt}
+\lstinputlisting[linerange={8-8,14-14,18-18}]{app.bin.txt}
 \begin{tabular}{|c|c|c|c|c|c|c|}
   \hline
   \#ligne & valide? & tag & mot3 & mot2 & mot1 & mot0 \\ \hline
@@ -147,13 +147,13 @@ doit être prêt à recevoir de l'information sur l'intégralité de sa mémoire
 l'intégralité du cache doit être invalidé.
 
 \section{Question E1}
-Voici les champs des adresses de A[0] et B[0] :
+Voici les champs des adresses de A[0] et B[0] :\\
 \begin{tabular}{|c|c|c|c|c|}
   \hline
  & Adresse & TAG & SET & BYTE \\ \hline
  A & 0x01000000 & 0x$010000_0$ & 0 & 0 \\ \hline
  B & 0x01000080 & 0x$010000_1$ & 0 & 0 \\ \hline
-\end{tabular}
+\end{tabular}\\
 Les deux instructions générant des MISSes sont les suivantes :
 \lstinputlisting[firstline=14,lastline=15]{app.bin.txt}
 La première génere un MISS compulsif car la donnée n'est pas présente en
@@ -285,13 +285,14 @@ La commande eret passe du code système au code utilisateur via un branchement
 de EPC est à 0x00400000). Le branchement se fait au cycle 46 :
 \lstinputlisting[firstline=1072,lastline=1093]{trace.txt}
 
+\newpage
+
 \section{Question G3}
 On remarque en observant la trace qu'une lecture de donnée non en cache au
 cycle 71 prend jusqu'au cycle 81 pour être menée, soit 10 cycles. En enlevant
 la requête, le coût du MISS est de 9 cycles.
 La première itération commence au cycle 71 et se termine au cycle 107, soit
 36 cycles :
-\newpage
 \lstinputlisting[firstline=1622,lastline=1643]{trace.txt}
 \lstinputlisting[firstline=2414,lastline=2435]{trace.txt}
 \newpage
@@ -301,5 +302,13 @@ La seconde et troisième itération prennent chaqu'une 30 cycles. Le coût des
 MISSes de données sont plus importants parce qu'il faut maintenant invalider la
 ligne de cache dans la case où on veut charger la nouvelle ligne depuis la
 mémoire.
+
+\section{Question G5}
+Le taux de MISS est de 100\% à la fin de l'exécution de la boucle.\\
+La dernière instrcution de la dernière boucle est au cycle 696 :
+\lstinputlisting[firstline=15413,lastline=15434]{trace.txt}
+Sachant que la première instruction du {\bf main} est exécutée au cycle 57,
+l'exécution du main a pris 639 cycles.
+
 
 \end{document}

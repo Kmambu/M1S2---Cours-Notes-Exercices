@@ -11,3 +11,8 @@
 
 # Subversion folders
 .svn
+
+# PNL : codebases
+myHome.img
+pnl-tp.img
+linux-4.9.82
