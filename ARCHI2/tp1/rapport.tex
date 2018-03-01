@@ -1,6 +1,12 @@
 \documentclass[10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{array}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\renewcommand{\arraystretch}{1.5}
 \author{Kevin Mambu}
 \date{\today}
 
@@ -8,11 +14,6 @@
 
 \begin{document}
 \maketitle
-
-\newpage
-\tableofcontents
-
-\newpage
 
 \section{Énoncé du TP}
 Le sujet de ce TP sera le prototypage virtuel, de la simulation extremement fidèle
@@ -23,7 +24,7 @@ L'idée est de reproduire le comportement d'un ordinateur au cycle près et au b
 On "construit" une machine complète avec son/ses processeur-s en inteconnectant
 entre eux tous les composants matériels d'une vraie machine. \\
 Ces composants existent déjà au sein d'une bibliothèque du domaine public appelée
-SoClib, utilisant le langage SYSTEM_C (C++). On aura un processeur de fourni et on
+SoClib, utilisant le langage SYSTEM\_C (C++). On aura un processeur de fourni et on
 développera, dans un premier temps en MIPS32 puis en C, des programmes à executer
 sur notre prototype virtuel.\\
 
@@ -34,5 +35,130 @@ sur notre prototype virtuel.\\
 
 Le prototype est de plus faible cadençage afin de pouvoir rendre l'évolution de la
 machine plus macroscopique (on peut faire évoluer le système cycle par cycle) et de
-pouvoir inspecter de manière plus fine.
+pouvoir inspecter de manière plus fine.\\
+
+\section{Question C1/C2}
+
+\begin{center}
+
+\begin{tabular}{|c|c|}
+  \hline
+    A & ${SEL}\bullet{ADR\_OK}\bullet{DELAY}\bullet\overline{READ}$ \\ \hline
+    B & ${SEL}\bullet\overline{READ}\bullet\overline{DELAY}\bullet{ADR\_OK}$ \\ \hline
+    C & ${SEL}\bullet{READ}\bullet\overline{DELAY}\bullet{ADR\_OK}$ \\ \hline
+    D & ${SEL}\bullet{ADR\_OK}\bullet{DELAY}\bullet{READ}$ \\ \hline
+    E & ${SEL}\bullet\overline{ADR\_OK}$ \\ \hline
+    F & $\overline{SEL}$ \\ \hline
+    G & \\ \hline
+    R & ${SEL}\bullet\overline{ADR\_OK}$ \\ \hline
+    S & ${SEL}\bullet{ADR\_OK}$ \\ \hline
+    T & $\overline{SEL}\bullet{ADR\_OK}$ \\ \hline
+    U & ${GO}$\\ \hline
+    V & ${GO}$\\ \hline
+    U' & $\overline{GO}$\\ \hline
+    V' & $\overline{GO}$\\ \hline
+    X & ${SEL}\bullet{ADR\_OK}$ \\ \hline
+    Y & ${SEL}\bullet\overline{ADR\_OK}$ \\ \hline
+    Z & $\overline{SEL}\bullet{ADR\_OK}$ \\ \hline
+\end{tabular}\\[0.8in]
+
+\begin{tabular}{|c|c|c|c|c|}
+  \hline
+  & {\bf ACK\_EN} & {\bf ACK\_VAL} & {\bf DT\_EN} & {\bf MEM\_CMD} \\ \hline
+  {\bf IDLE} & X & 0 & NOP & 0 \\ \hline
+  {\bf R\_WAIT} & WAIT & 1 & NOP & 0 \\ \hline
+  {\bf R\_OK} & READY & 1 & READ & 1 \\ \hline
+  {\bf W\_WAIT} & WAIT & 1 & NOP & 0 \\ \hline
+  {\bf W\_OK} & READY & 1 & WRITE & 1 \\ \hline
+  {\bf ERROR} & ERROR & 1 & NOP & 0 \\ \hline
+\end{tabular}
+
+\end{center}
+\section{Question D1/D2}
+\begin{tabular}{|c|c|} \hline
+  {\bf Label} & {\bf Expr.} \\ \hline
+  A &  \\ \hline
+  B & ${GNT}$ \\ \hline
+  B' & $\overline{GNT}$ \\ \hline
+  C &  \\ \hline
+  D & ${RDY}$ \\ \hline
+  D' & $\overline{RDY}$ \\ \hline
+  E & ${RDY}$ \\ \hline
+  E' & $\overline{RDY}$ \\ \hline
+  F & ${RDY}$ \\ \hline
+  F' & $\overline{RDY}$ \\ \hline
+  G & ${RDY}$ \\ \hline
+  G' & $\overline{RDY}$ \\ \hline
+  H & ${GNT}$ \\ \hline
+  H' & $\overline{GNT}$ \\ \hline
+\end{tabular}
+\quad
+\begin{tabular}{|c|c|} \hline
+  I &  \\ \hline
+  J & $\overline{RDY}$ \\ \hline
+  K & ${RDY}\bullet{LAST}$ \\ \hline
+  L & ${RDY}\bullet\overline{LAST}$ \\ \hline
+  M & ${GNT}$ \\ \hline
+  M' & $\overline{GNT}$ \\ \hline
+  N &  \\ \hline
+  O & $\overline{RDY}$ \\ \hline
+  P & ${RDY}\bullet{NUL}$ \\ \hline
+  Q & ${RDY}\bullet\overline{NUL}$ \\ \hline
+  R & ${GNT}$ \\ \hline
+  R' & $\overline{GNT}$ \\ \hline
+  S &  \\ \hline
+  T & ${RDY}$ \\ \hline
+  T' & $\overline{RDY}$ \\ \hline
+\end{tabular}\\[0.5in]
+\begin{tabular}{|c|c|c|c|c|c|c|}
+  \hline
+  & REQ & CMD\_EN & ADR\_VALUE & READ\_VALUE & LOCK\_VALUE & DT\_EN \\ \hline
+  {\bf INIT} & 0 & 0 & X & X & X & 0 \\ \hline
+  {\bf RAM\_REQ} & 1 & 0 & X & X & X & 0 \\ \hline
+  {\bf RAM\_A0} & 0 & 1 & RAM\_BASE & 1 & 1 & 0 \\ \hline
+  {\bf RAM\_A1\_D0} & 0 & 1 & $RAM\_BASE + 4$ & 1 & 1 & 0 \\ \hline
+  {\bf RAM\_A2\_D1} & 0 & 1 & $RAM\_BASE + 8$ & 1 & 1 & 0 \\ \hline
+  {\bf RAM\_A3\_D2} & 1 & 1 & $RAM\_BASE + 12$ & 1 & 0 & 0 \\ \hline
+  {\bf RAM\_D3} & 0 & 0 & X & 1 & 0 & 0 \\ \hline
+  {\bf W\_REQ} & 1 & 0 & X & X & X & 0 \\ \hline
+  {\bf W\_AD} & 0 & 1 & $SEG\_TTY\_BASE$ & 0 & 0 & 0 \\ \hline
+  {\bf W\_DT} & 0 & 1 & $SEG\_TTY\_BASE$ & 0 & 0 & 1 \\ \hline
+  {\bf STS\_REQ} & 1 & 0 & X & X & 0 & 0 \\ \hline
+  {\bf STS\_AD} & 0 & 1 & $SEG\_TTY + 4$ & X & X & 0 \\ \hline
+  {\bf STS\_DT} & 0 & 1 & X & ? & X & ? \\ \hline
+  {\bf BUF\_REQ} & 1 & 0 & X & X & X & 0 \\ \hline
+  {\bf BUF\_AD} & 0 & 1 & X & X & X & 1 \\ \hline
+  {\bf BUF\_DT} & 0 & 1 & X & 1 & X & 1 \\ \hline
+\end{tabular}
+
+\newpage
+
+\section{Question E1/E2}
+\begin{tabular}{|c|c|}
+  \hline
+  {\bf Label} & {\bf Expr.} \\ \hline
+  X' & $\overline{REQ}$ \\ \hline
+  X & ${REQ}$ \\ \hline
+  Y' & $\overline{LOCK}$ \\ \hline
+  Y & ${LOCK}$ \\ \hline
+  Z' & $\overline{({ACK}\oplus{WAIT})}+{LOCK}$ \\ \hline
+  Z & $\overline{LOCK}\bullet({ACK}\oplus{WAIT})$ \\ \hline
+  K & $\overline{REQ}$ \\ \hline
+  L & ${REQ}$ \\ \hline
+\end{tabular}
+\quad
+\begin{tabular}{|c|c|c|c|}
+  \hline
+  & GNT & SEL0 & SEL1 \\ \hline
+  IDLE & 0 & 0 & 0 \\ \hline
+  AD & 1 & $(A>>msb\_shift) == 0$ & $(A>>msb\_shift) == 1$ \\ \hline
+  DTAD & 1 & $(A>>msb\_shift) == 0$ & $(A>>msb\_shift) == 1$ \\ \hline
+  DT & 0 & 0 & 0 \\ \hline
+\end{tabular}
+
+\section{Question E3}
+Lorsque l'état courant du BCU est à l'état IDLE, si après envoi de la dernière
+réponse il restait une requête suivante dans l'ordre de priorité, il faut la
+traiter au cycle suivant. Le BCU ne retourne dans létat IDLE que lorsqu'il est
+en attente d'une requête maître.
 \end{document}
