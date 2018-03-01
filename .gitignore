@@ -8,3 +8,6 @@
 
 # C optional files
 *.o
+
+# Subversion folders
+.svn

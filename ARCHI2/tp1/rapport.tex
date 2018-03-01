@@ -112,23 +112,28 @@ pouvoir inspecter de manière plus fine.\\
 \end{tabular}\\[0.5in]
 \begin{tabular}{|c|c|c|c|c|c|c|}
   \hline
-  & REQ & CMD\_EN & ADR\_VALUE & READ\_VALUE & LOCK\_VALUE & DT\_EN \\ \hline
+  & {\bf REQ} & {\bf CMD\_EN} & {\bf ADR\_VALUE} & {\bf READ\_VALUE} & {\bf LOCK\_VALUE} & {\bf DT\_EN} \\ \hline
+  \hline
   {\bf INIT} & 0 & 0 & X & X & X & 0 \\ \hline
+  \hline
   {\bf RAM\_REQ} & 1 & 0 & X & X & X & 0 \\ \hline
   {\bf RAM\_A0} & 0 & 1 & RAM\_BASE & 1 & 1 & 0 \\ \hline
   {\bf RAM\_A1\_D0} & 0 & 1 & $RAM\_BASE + 4$ & 1 & 1 & 0 \\ \hline
   {\bf RAM\_A2\_D1} & 0 & 1 & $RAM\_BASE + 8$ & 1 & 1 & 0 \\ \hline
-  {\bf RAM\_A3\_D2} & 1 & 1 & $RAM\_BASE + 12$ & 1 & 0 & 0 \\ \hline
+  {\bf RAM\_A3\_D2} & 0 & 1 & $RAM\_BASE + 12$ & 1 & 0 & 0 \\ \hline
   {\bf RAM\_D3} & 0 & 0 & X & 1 & 0 & 0 \\ \hline
+  \hline
   {\bf W\_REQ} & 1 & 0 & X & X & X & 0 \\ \hline
   {\bf W\_AD} & 0 & 1 & $SEG\_TTY\_BASE$ & 0 & 0 & 0 \\ \hline
   {\bf W\_DT} & 0 & 1 & $SEG\_TTY\_BASE$ & 0 & 0 & 1 \\ \hline
-  {\bf STS\_REQ} & 1 & 0 & X & X & 0 & 0 \\ \hline
-  {\bf STS\_AD} & 0 & 1 & $SEG\_TTY + 4$ & X & X & 0 \\ \hline
-  {\bf STS\_DT} & 0 & 1 & X & ? & X & ? \\ \hline
+  \hline
+  {\bf STS\_REQ} & 1 & 0 & X & X & X & 0 \\ \hline
+  {\bf STS\_AD} & 0 & 1 & $SEG\_TTY\_BASE + 4$ & 1 & 0 & 0 \\ \hline
+  {\bf STS\_DT} & 0 & 1 & $SEG\_TTY\_BASE + 4$ & 1 & 0 & 0 \\ \hline
+  \hline
   {\bf BUF\_REQ} & 1 & 0 & X & X & X & 0 \\ \hline
-  {\bf BUF\_AD} & 0 & 1 & X & X & X & 1 \\ \hline
-  {\bf BUF\_DT} & 0 & 1 & X & 1 & X & 1 \\ \hline
+  {\bf BUF\_AD} & 0 & 1 & $SEG\_TTY\_BASE + 8$ & 0 & 0 & 0 \\ \hline
+  {\bf BUF\_DT} & 0 & 1 & $SEG\_TTY\_BASE + 8$ & 0 & 0 & 1 \\ \hline
 \end{tabular}
 
 \newpage
@@ -143,22 +148,44 @@ pouvoir inspecter de manière plus fine.\\
   Y & ${LOCK}$ \\ \hline
   Z' & $\overline{({ACK}\oplus{WAIT})}+{LOCK}$ \\ \hline
   Z & $\overline{LOCK}\bullet({ACK}\oplus{WAIT})$ \\ \hline
-  K & $\overline{REQ}$ \\ \hline
-  L & ${REQ}$ \\ \hline
+  J & $\overline{({ACK}\oplus{WAIT})}$ \\ \hline
+  K & ${({ACK}\oplus{WAIT})}\bullet\overline{REQ}$ \\ \hline
+  L & ${({ACK}\oplus{WAIT})}\bullet{REQ}$ \\ \hline
 \end{tabular}
 \quad
 \begin{tabular}{|c|c|c|c|}
   \hline
   & GNT & SEL0 & SEL1 \\ \hline
-  IDLE & 0 & 0 & 0 \\ \hline
-  AD & 1 & $(A>>msb\_shift) == 0$ & $(A>>msb\_shift) == 1$ \\ \hline
-  DTAD & 1 & $(A>>msb\_shift) == 0$ & $(A>>msb\_shift) == 1$ \\ \hline
-  DT & 0 & 0 & 0 \\ \hline
+  IDLE & REQ & 0 & 0 \\ \hline
+  AD & 0 & $(A>>msb\_shift) == 0$ & $(A>>msb\_shift) == 1$ \\ \hline
+  DTAD & 0 & $(A>>msb\_shift) == 0$ & $(A>>msb\_shift) == 1$ \\ \hline
+  DT & ${REQ}\bullet\overline{WAIT}$ & 0 & 0 \\ \hline
 \end{tabular}
 
 \section{Question E3}
 Lorsque l'état courant du BCU est à l'état IDLE, si après envoi de la dernière
 réponse il restait une requête suivante dans l'ordre de priorité, il faut la
-traiter au cycle suivant. Le BCU ne retourne dans létat IDLE que lorsqu'il est
+comptabiliser dans le cycle. Le BCU ne retourne dans létat IDLE que lorsqu'il est
 en attente d'une requête maître.
+
+\section{Question G2}
+Il n'y a qu'1 cycle d'attente dans les états de l'automate du composant maître où
+celui-ci demande au BCU l'allocation du bus. Cela s'explique par le fait qu'il n'y
+qu'un seul composant maître connecté au bus dans la situation étudiée.
+
+\section{Question G3}
+Sachant que le composant maître fait une lecture en rafale de 4 octets par 4 octets
+et que son buffer cache est de 16 octets, il y a 4 cycles d'attentes dans les états
+où ce dernier attend la réponse de la RAM.
+
+\section{Question G4}
+\begin{itemize}
+  \item \#TTY\_REQ ={n} {cycles}
+  \item \#TTY\_AD = {1} {cycle}
+  \item \#TTY\_DT = {1} {cycle}
+\end{itemize}
+
+Dans notre cas, on considère que la requête prend n = 1 cycle, on prend donc 3 cycles
+pour écrire un caractère.
+
 \end{document}

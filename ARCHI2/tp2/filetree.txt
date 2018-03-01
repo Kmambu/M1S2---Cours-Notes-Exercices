@@ -1,0 +1,22 @@
+- main.c : code de l'application utilisateur
+| main.o
+  |+stdio.o
+  -> app.bin
+
+- reset.s: code de boot
+| reset.o
+  |+giet.o
+  |+drivers.o
+  |+common.o
+  |+ctx_handler.o
+  |+irq_handler.o
+  |+sys_handler.o
+  |+exc_handler.o
+  -> sys.bin
+
+nb : il a fallu ajouter au fichier config.h :
+  #define NO_HARD_CC 0
+pour mener a bien la compilation, cette option specifie si on veut desactiver
+ou non la coherence des caches pour la simulation. Mais ici la valeur de cette
+option n'importe pas, vu qu'il y a qu'un seul composant maitre qui converse
+avec des cibles
