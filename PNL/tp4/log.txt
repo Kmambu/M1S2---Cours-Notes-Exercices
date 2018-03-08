@@ -1,0 +1,1 @@
+qemu-system-x86_64: -hda pnl-tp.img: Could not open 'pnl-tp.img': No such file or directory

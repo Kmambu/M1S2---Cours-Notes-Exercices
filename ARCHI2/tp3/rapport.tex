@@ -49,8 +49,6 @@ Interne du Contrôleur de Cache}
 \begin{document}
 \maketitle
 
-\section{Spécifications}
-
 \section{Question C1}
 L'adresse de la première instruction du main est 0x00400000. La quatrième
 instruction du main est l'instruction du loop, à 0x0040000c.
@@ -259,15 +257,19 @@ L'évolution des états internes du DCACHE\_FSM est identique à celle représen
 ci-dessus pour une lecture. 9 cycles de gel en cas de MISS dans les deux cas.
 
 \section{Question F6}
+Au total, $7*20=140$ instructions sont exécutées pour toutes les itérations de
+boucle.\\
 À la première itération on comptabilise deux MISS d'instruction compulsifs.\\
 À toutes les itérations on comptabilise deux MISS de données dûs aux conflits.\\
 Sachant que le poids du MISS est de 9 cycles de gel :
 \begin{itemize}
   \item $\#cycle=(\underbrace{2\times{10}}_{imiss}+
     \underbrace{2\times{10}}_{dmiss}+5)+
-    {19}\times\underbrace{2\times{10}}_{dmiss}+5=525$ cy
-  \item ${CPI}=\frac{525}{140}=3.75$!
+    {19}\times(\underbrace{2\times{10}}_{dmiss}+5)=520$ cy
+  \item ${CPI}=\frac{525}{140}\approx{3.714}$!
 \end{itemize}
+
+\newpage
 
 \section{Question G1}
 La première instruction s'exécute au cycle 10 :
@@ -310,5 +312,25 @@ La dernière instrcution de la dernière boucle est au cycle 696 :
 Sachant que la première instruction du {\bf main} est exécutée au cycle 57,
 l'exécution du main a pris 639 cycles.
 
+\section{Question H}
+Le problème que l'on a actuellement est que les adresses sont toutes deux
+alignées entre elles, et que chaque requête de lecture de tableaux engendre des
+MISSes de conflit. Il faudrait assigner le tableau B à une autre adresse afin
+que les lignes de caches dans lesquelles elles figurent n'entre pas en collision
+sur la même case.\\
+On peut désaligner l'adresse de B, avec du bourrage d'espace pour éviter les
+collisions. Par exemple en positionnant la base de B de telle sorte qu'elle soit
+chargée dans la case suivant celle de B:\\
+\begin{itemize}
+  \item Par exemple, positionner la base du tableau B à l'adresse 0x01000090
+  ferait que la première ligne de cache contenant une portion de B sera chargée
+  à la case d'index numéro 1
+\end{itemize}
+On aurait alors 2 MISSes de données toutes les 5 itérations :
+\begin{itemize}
+  \item $\#cycles={15}\times{7}+{4}\times{25}+{1}\times{45}=250$
+  \item ${CPI}=\frac{250}{140}\approx{1.786}$, soit plus de deux fois plus
+  performant.
+\end{itemize}
 
 \end{document}

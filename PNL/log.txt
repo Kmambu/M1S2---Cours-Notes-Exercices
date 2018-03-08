@@ -5,6 +5,6 @@ WARNING: Image format was not specified for 'myHome.img' and probing guessed raw
          Automatically detecting the format is dangerous for raw images, write operations on block 0 will be restricted.
          Specify the 'raw' format explicitly to remove the restrictions.
 
-(qemu-system-x86_64:22925): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f202f816310 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
+(qemu-system-x86_64:2733): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7faae7b5c360 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
 
-(qemu-system-x86_64:22925): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f202f816510 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
+(qemu-system-x86_64:2733): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7faae7b5c560 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
