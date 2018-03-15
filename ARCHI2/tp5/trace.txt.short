@@ -1,0 +1,16 @@
+*** proc[0] at cycle 292397
+- INSTRUCTIONS       = 205917
+- CPI                = 1.41998
+- CACHED READ RATE   = 0.263961
+- UNCACHED READ RATE = 0.00121408
+- WRITE RATE         = 0.146399
+- IMISS RATE         = 0.00896478
+- DMISS RATE         = 0.00943813
+- IMISS COST         = 16.0515
+- DMISS COST         = 14.386
+- UNC COST           = 6
+- WRITE COST         = 0
+bcu : Statistics
+master 0 : n_req = 32754 , n_wait_cycles = 32754 , access time = 1
+master 1 : n_req = 0 , n_wait_cycles = 0 , access time = -nan
+master 2 : n_req = 0 , n_wait_cycles = 0 , access time = -nan

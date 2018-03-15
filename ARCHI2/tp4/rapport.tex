@@ -88,5 +88,38 @@ $\frac{{c\_dread\_count}-{c\_dunc\_count}}{run\_cycles}$.\\
 c\_dread\_count comptabilise toutes les lectures.
 
 \section{Question D1}
+\lstinputlisting{QuestionD.txt}
+\section{Question D2}
+
+\newpage
+
+\section{Question E1}
+\includegraphics[width=18cm]{QuestionE.png}\\
+Lorsque la configuration est de 16 octets de largeur, sachant que ce programme
+utilisateur contient beaucoup de branchements et d'appels de fonctions, ce
+ratio semble optimisé pour le chargement des instructions sans prendre trop de
+temps. Sur la part de gauche du graphe, une à deux instructions par ligne
+seulement sont chargées, ce qui augmente la fréquence de lecture en mémoire.
+Sur la part de droite, les grandes lignes de cache permettent de charger plus
+d'instructions, 4 à 5 par ligne. Mais cela augmente le temps de chargement d'une
+ligne de cache en mémoirem du coup.\\
+Le juste milieu est à des cases de 16 octets.
+
+\newpage
+
+\section{Question F1}
+\lstinputlisting{QuestionD.txt}
+
+\section{Question G1}
+\begin{itemize}
+  \item Le buffer d'écriture postées est une queue dans laquelle le contrôleur
+  de cache peut stocker les requêtes (protocole FIFO)
+  \item Lorsque le processeur veut poster une requête d'écriture alors que le
+  buffer est plein, il doit attendre que ce dernier ne soit plus plein (stall)
+  \item Lorsque le processeur fait une requête de lecture qui fait MISS alors
+  que le BEP est non-vide, les requêtes postées sont prioritaires sur le bus,
+  pour s'assurer que les données les plus récemment modifiées soient bien
+  présentes en mémoires (problème de consistence mémoire)
+\end{itemize}
 
 \end{document}
