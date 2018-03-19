@@ -3,6 +3,7 @@
 #include <sys/ioctl.h>
 
 #define MAGICN 'N'
-#define HELLO _IOR(MAGICN, 0, char *)
+#define HELLO	_IOR(MAGICN, 0, char *)
+#define WHO	_IOW(MAGICN, 0, char *)
 
 #endif

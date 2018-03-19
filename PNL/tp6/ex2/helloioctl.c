@@ -7,7 +7,8 @@
 #include <uapi/asm-generic/ioctl.h>
 
 #define MAGICN 'N'
-#define HELLO _IOR(MAGICN, 0, char *)
+#define HELLO	_IOR(MAGICN, 0, char *)
+#define WHO	_IOW(MAGICN, 0, char *)
 
 #define BUFSIZE 64
 
@@ -29,6 +30,13 @@ long hello_unlocked_ioctl(struct file* file, unsigned int req,
 			if (copy_to_user(buf,hello_buf,siz) >= siz)
 			{
 				pr_info("[helloioctl]\tcopy_to_user failed\n");
+				return -ENOTTY;
+			}
+			break;
+		case WHO :
+			if (copy_from_user(hello_buf,buf,siz) >= siz)
+			{
+				pr_info("[helloioctl]\tcopy_from_user failed\n");
 				return -ENOTTY;
 			}
 			break;
