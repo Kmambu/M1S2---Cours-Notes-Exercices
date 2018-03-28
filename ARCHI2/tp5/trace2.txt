@@ -1,0 +1,133 @@
+
+********************************************************
+******        tp5_top                             ******
+********************************************************
+
+
+                 SEGMENT  TABLE
+
+segment : seg_reset , base = 0xbfc00000 , size = 0x1000 , target = 0 , cached = 1
+segment : seg_kcode , base = 0x80000000 , size = 0x4000 , target = 1 , cached = 1
+segment : seg_kdata , base = 0x82000000 , size = 0x10000 , target = 1 , cached = 1
+segment : seg_kunc , base = 0x81000000 , size = 0x10000 , target = 1 , cached = 0
+segment : seg_code , base = 0x400000 , size = 0x4000 , target = 1 , cached = 1
+segment : seg_stack , base = 0x2000000 , size = 0x20000 , target = 1 , cached = 1
+segment : seg_data , base = 0x1000000 , size = 0x80000 , target = 1 , cached = 1
+segment : seg_fbf , base = 0x96000000 , size = 0x10000 , target = 3 , cached = 0
+segment : seg_tty , base = 0x90000000 , size = 0x20 , target = 2 , cached = 0
+segment : seg_icu , base = 0x9f000000 , size = 0x40 , target = 4 , cached = 0
+segment : seg_tim , base = 0x91000000 , size = 0x20 , target = 5 , cached = 0
+segment : seg_dma , base = 0x93000000 , size = 0x20 , target = 6 , cached = 0
+segment : seg_ioc , base = 0x92000000 , size = 0x20 , target = 7 , cached = 0
+
+
+
+Instanciation of PibuBcu : bcu
+    nb_master = 4
+    nb_target = 8
+    time_out  = 100
+
+Instanciation of PibusSimpleRam : rom
+    latency = 0
+    segment seg_reset | base = 0xbfc00000 | size = 0x1000
+
+Instanciation of PibusSimpleRam : ram
+    latency = 0
+    segment seg_kcode | base = 0x80000000 | size = 0x4000
+    segment seg_kdata | base = 0x82000000 | size = 0x10000
+    segment seg_kunc | base = 0x81000000 | size = 0x10000
+    segment seg_code | base = 0x400000 | size = 0x4000
+    segment seg_stack | base = 0x2000000 | size = 0x20000
+    segment seg_data | base = 0x1000000 | size = 0x80000
+
+Instanciation of PibusMultiTty : tty
+    ntty = 2
+    segment seg_tty | base = 0x90000000 | size = 0x20
+
+Instanciation of PibusFrameBuffer : fbf
+    latency = 0
+    segment seg_fbf | base = 0x96000000 | size = 0x10000
+
+Instanciation of PibusIcu : icu
+    irq_in  = 6
+    irq_out = 2
+    segment seg_icu | base = 0x9f000000 | size = 0x40
+
+Instanciation of PibusMultiTimer : tim
+    ntimer = 2
+    segment seg_tim | base = 0x91000000 | size = 0x20
+
+Instanciation of PibusDma : dma
+    burst length = 10
+    segment seg_dma | base = 0x93000000 | size = 0x20
+
+Instanciation of PibusBlockDevice : ioc
+    file_name  = Makefile
+    block_size = 512
+    latency    = 1000
+    segment seg_ioc | base = 0x92000000 | size = 0x20
+
+Instanciation of PibusMips32Xcache : proc[0]
+    proc_id      = 0
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+Instanciation of PibusMips32Xcache : proc[1]
+    proc_id      = 1
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+bcu : connected
+ram : connected
+rom : connected
+tty : connected
+tim : connected
+fbf : connected
+icu : connected
+dma : connected
+ioc : connected
+procs : connected
+
+Loading at 0xbfc00000 size 0x1000: seg_reset 
+Loading at 0x80000000 size 0x4000: seg_kcode 
+Loading at 0x82000000 size 0x10000: seg_kdata 
+Loading at 0x81000000 size 0x10000: seg_kunc 
+Loading at 0x400000 size 0x4000: seg_code 
+Loading at 0x2000000 size 0x20000: nothing
+Loading at 0x1000000 size 0x80000: seg_data 
+Loading at 0xbfc00000 size 0x1000: seg_reset 
+Loading at 0x80000000 size 0x4000: seg_kcode 
+Loading at 0x82000000 size 0x10000: seg_kdata 
+Loading at 0x81000000 size 0x10000: seg_kunc 
+Loading at 0x400000 size 0x4000: seg_code 
+Loading at 0x2000000 size 0x20000: nothing
+Loading at 0x1000000 size 0x80000: seg_data 
+*** proc[0] at cycle 2867064
+- INSTRUCTIONS       = 2006234
+- CPI                = 1.42908
+- CACHED READ RATE   = 0.266091
+- UNCACHED READ RATE = 0.00131191
+- WRITE RATE         = 0.142791
+- IMISS RATE         = 0.00848754
+- DMISS RATE         = 0.00816911
+- IMISS COST         = 17.5069
+- DMISS COST         = 16.1298
+- UNC COST           = 7.48024
+- WRITE COST         = 0
+bcu : Statistics
+master 0 : n_req = 310493 , n_wait_cycles = 439394 , access time = 1.41515
+master 1 : n_req = 310030 , n_wait_cycles = 442845 , access time = 1.42839
+master 2 : n_req = 0 , n_wait_cycles = 0 , access time = -nan
+master 3 : n_req = 0 , n_wait_cycles = 0 , access time = -nan

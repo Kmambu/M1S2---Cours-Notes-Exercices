@@ -1,126 +1,79 @@
+#include <linux/init.h>
 #include <linux/module.h>
+#include <linux/moduleparam.h>
 #include <linux/kernel.h>
+#include <linux/sched.h>
+#include <linux/pid.h>
+#include <linux/timer.h>
+#include <linux/kernel_stat.h>
 #include <linux/kthread.h>
-#include <linux/slab.h>
 
-MODULE_DESCRIPTION("A process monitor");
-MODULE_AUTHOR("Maxime Lorrillere <maxime.lorrillere@lip6.fr>");
+MODULE_DESCRIPTION("Monitors a task...");
+MODULE_AUTHOR("Kevin Mambu");
 MODULE_LICENSE("GPL");
-MODULE_VERSION("1");
 
-unsigned short target = 1; /* default pid to monitor */
-unsigned frequency = 1; /* sampling frequency */
+static struct task_struct *running_thread;
+static struct task_struct *task;
+static int running = 1;
+static int target;
+MODULE_PARM_DESC(target,"Process ID of the target task to monitor");
+module_param(target,int,0644);
 
-module_param(target, ushort, 0400);
-module_param(frequency, uint, 0600);
-
-struct task_monitor {
+static struct task_monitor {
 	struct pid *pid;
-};
+} task_monitor;
 
-struct task_monitor *tm;
-
-struct task_struct *monitor_thread;
-
-struct task_sample {
-	cputime_t utime;
-	cputime_t stime;
-};
-
-bool get_sample(struct task_monitor *tm, struct task_sample *sample)
+int monitor_pid(pid_t target)
 {
-	struct task_struct *task;
-	bool alive = false;
+	task_monitor.pid = find_get_pid(target);
+	if (!task_monitor.pid)
+		return -1;
+	return 0;
+}
 
-	task = get_pid_task(tm->pid, PIDTYPE_PID);
-	if (!task) {
-		pr_err("can't find task for pid %u\n", pid_nr(tm->pid));
-		goto out;
+int monitor_fn(void *unused)
+{
+	while (running)
+	{
+		char buf[32];
+		schedule_timeout(1*HZ);
+		if (!pid_alive((const struct task_struct *) task)) {
+			running = 0;
+			break;
+		}
+		snprintf(buf,32,"pid %d usr %ld sys %ld", target,
+				task->utime, task->stime);
 	}
+	return 0;
+}
 
-	task_lock(task);
-	alive = pid_alive(task);
-	if (alive)
-		task_cputime(task, &sample->utime, &sample->stime);
-	task_unlock(task);
+static int __init hello_init(void)
+{
+	pr_info("Hello, world!\n");
+	monitor_pid(target);
+	if(!task_monitor.pid) {
+		pr_info("[task_monitor] monitor failed : cannot find process id %d\n", target);
+		return -1;
+	}
+	pr_info("[task_monitor] monitor successful : found process id %d\n", target);
+	running_thread = kthread_run(monitor_fn, NULL, "monitor_fn");
+	task = get_pid_task(task_monitor.pid, PIDTYPE_PID);
+	pr_warn("Monitoring thread created\n");
+	return 0;
+}
+module_init(hello_init);
+
+static void __exit hello_exit(void)
+{
+	running = 0;
+	if (running_thread)
+		kthread_stop(running_thread);
+	pr_warn("Monitoring thread unloaded\n");
+	put_pid(task_monitor.pid);
+	pr_warn("struct pid released\n");
 	put_task_struct(task);
-out:
-	return alive;
+	pr_warn("struct task_struct released\n");
+	pr_info("Goodbye, cruel world\n");
 }
+module_exit(hello_exit);
 
-void print_sample(struct task_monitor *tm)
-{
-	struct task_sample ts;
-	pid_t pid = pid_nr(tm->pid);
-	bool alive;
-
-	alive = get_sample(tm, &ts);
-
-	if (!alive)
-		pr_err("%hd is dead\n",	pid);
-	else
-		pr_info("%hd usr %lu sys %lu\n", pid, ts.utime, ts.stime);
-}
-
-int monitor_fn(void *data)
-{
-	while (!kthread_should_stop()) {
-		set_current_state(TASK_INTERRUPTIBLE);
-		if (schedule_timeout(max(HZ/frequency, 1U)))
-			return -EINTR;
-
-		print_sample(tm);
-	}
-	return 0;
-}
-
-int monitor_pid(pid_t pid)
-{
-	struct pid *p = find_get_pid(pid);
-
-	if (!p) {
-		pr_err("pid %hu not found\n", pid);
-		return -ESRCH;
-	}
-	tm = kmalloc(sizeof(*tm), GFP_KERNEL);
-	tm->pid = p;
-
-	return 0;
-}
-
-static int monitor_init(void)
-{
-	int err = monitor_pid(target);
-
-	if (err)
-		return err;
-
-	monitor_thread = kthread_run(monitor_fn, NULL, "monitor_fn");
-	if (IS_ERR(monitor_thread)) {
-		err = PTR_ERR(monitor_thread);
-		goto abort;
-	}
-
-	pr_info("Monitoring module loaded\n");
-	return 0;
-
-abort:
-	put_pid(tm->pid);
-	kfree(tm);
-	return err;
-}
-
-static void monitor_exit(void)
-{
-	if (monitor_thread)
-		kthread_stop(monitor_thread);
-
-	put_pid(tm->pid);
-	kfree(tm);
-
-	pr_info("Monitoring module unloaded\n");
-}
-
-module_init(monitor_init);
-module_exit(monitor_exit);
-

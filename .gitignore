@@ -17,5 +17,6 @@ myHome.img
 pnl-tp.img
 linux-4.9.82
 
-# Ignore PSESI folder : the supervisor refuses to shaere his works
+# Ignore massive folders
 PSESI
+FPGA1

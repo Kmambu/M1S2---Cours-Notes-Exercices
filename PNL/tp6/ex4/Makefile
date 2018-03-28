@@ -1,18 +1,19 @@
 .PHONY: all 
+#.SECONDARY:
 
 ifneq ($(KERNELRELEASE),)
 
-	obj-m := taskmonitor.o
+obj-m := taskmonitor.o
 
 else
 
-  KERNELDIR ?= /lib/modules/$(shell uname -r)/build
+  KERNELDIR ?= ~/Documents/M1S2-Cours---Notes---Exercices/PNL/linux-4.9.82
   PWD := $(shell pwd)
 
 all:
-	make -C $(KERNELDIR) M=$$PWD modules
+	make -C $(KERNELDIR) M=$(PWD) modules
 
 clean:
-	make -C $(KERNELDIR) M=$$PWD clean
+	make -C $(KERNELDIR) M=$(PWD) clean
 
 endif

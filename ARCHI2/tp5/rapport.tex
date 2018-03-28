@@ -1,6 +1,7 @@
 \documentclass[10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{mathtools}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{array}
 \usepackage[margin=0.5in]{geometry}
@@ -110,7 +111,7 @@ transaction rafale, une fois le registre intermédiaire plein. Plutôt qu'une
 transaction par octet, ce qui est plus coûteux.
 
 \subsection{Question C3}
-{\it unsigned int fb\_sync\_write(unsigned int offset, void *buffer,unsigned int length)}\\
+{\it unsigned int fb\_sync\_write(unsigned int offset, void *buffer,unsigned int length)}
 \begin{itemize}
   \item offset : le déplacement nécessaire où écrire dans le tampon du
   Framebuffer.\\
@@ -124,19 +125,140 @@ transaction par octet, ce qui est plus coûteux.
 
 \section{D) Caractérisation de l'application logicielle}
 \subsection{Question D1}
-\lstinputlisting{trace.txt.short}
+Execution à un processeur :
+\begin{center}
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \texttt{NB\_CYCLES} & \texttt{NB\_INST} & \texttt{CPI} \\ \hline
+    $5697418$ & $4010805$ & $1.42052$ \\ \hline
+  \end{tabular}
+\end{center}
 
 \subsection{Question D2}
-[TODO]
+\begin{center}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    \texttt{WRITE\_RATE} & \texttt{READ\_RATE} & \texttt{IMISS\_RATE} & \texttt{DMISS\_RATE} \\ \hline
+    $0.142853$ & $0.267784$ & $0.008941$ & $0.009121$ \\ \hline
+    \texttt{IMISS\_COST} & \texttt{DMISS\_COST} & \texttt{WRITE\_COST} & \\ \hline
+    $16.0537$ & $14.3444$ & $0.0000$ & \\ \hline
+  \end{tabular}
+\end{center}
+Les coûts sont des valeurs non-entières parce qu'elles sont moyennées.
 
 \subsection{Question D3}
-[TODO]
+Nombres de transacations :
+\begin{center}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    \texttt{IMISS} & \texttt{DMISS} & \texttt{UNC} & \texttt{WRITE} \\ \hline
+    $35860$ & $36582$ & $5266$ & $572955$ \\ \hline
+  \end{tabular}
+\end{center}
+Si le nombre de transactions de lectures est relativement faible, le nombre de
+transactions d'écritures lui est bien plus conséquent. Cela doit être dû au
+fait que les écritures sont prioritaires.
 
 \section{E) Exécution sur architecture multi-processeur}
 \subsection{Question E1}
 \lstinputlisting[language=C,linerange={20-43}]{main.c}
 
+\newpage
+
 \subsection{Question E2}
 \lstinputlisting{reset.s}
 
+\subsection{Question E3}
+Le fichier config.h spécifie la constante \texttt{NB\_PROC}, le nombre de
+processeurs. De ce fait, à chaque fois que l'on modifie le nombre de processeurs
+il faut re-génerer le binaire du programme.
+\newpage
+
+\subsection{Question E4}
+\begin{center}
+  \lstinputlisting[language=Gnuplot]{QuestionE4.plot}
+  \includegraphics[width=8.5cm]{QuestionE4_1.png}
+  \quad\quad
+  \includegraphics[width=8.5cm]{QuestionE4_2.png}
+\end{center}
+
+Posons l'équation suivante :
+\begin{equation}
+  \begin{split}
+    speedup & =\frac{execution\_time(1)}{execution\_time(N)} \\
+     & =\frac{execution\_time(1)}{N \times execution\_time(\frac{1}{N})}
+  \end{split}
+\end{equation}
+Théoriquement, plus le nombre de processeurs augmente, plus le temps d'execution
+par CPU diminue en fonction du nombre de processeurs, car ces derniers se partagent
+la charge de l'exécution d'instructions et par extension du nombre de MISS.\\
+Mais cette formule ne prend pas en compte la bande passante maximale du BUS, et
+on peut le constater sur l'évolution des courbes ci-dessus : à partir de 4 coeurs,
+le speedup ralentit considérablement et passé 6 coeurs le speedup diminue. Parce
+que le bus est devenu un goulôt d'étranglement.
+
+\newpage
+
+\subsection{Question F1}
+Au delà de l'exécution du programme, d'autres instructions continuent à être
+exécutées et les comptabiliser fausserait notre instrumentation.
+
+\subsection{Quesion F2}
+\begin{center}
+  \lstinputlisting[language=Gnuplot]{QuestionF2.dat}
+  \includegraphics[width=8.5cm]{QuestionF2_1.png}
+  \quad
+  \includegraphics[width=8.5cm]{QuestionF2_5.png}
+  \newline
+  \includegraphics[width=8.5cm]{QuestionF2_3.png}
+  \quad
+  \includegraphics[width=8.5cm]{QuestionF2_4.png}
+\end{center}
+
+\subsection{Question F3}
+La dégradation de la valeur du CPI est liée à l'augmentation du coût des MISS
+mais également à l'augmentation du coût des écritures : en effet, parce que
+les écritures sont prioritaires, les processeurs doivent supporter lors de leur
+attente la congestion passive du bus ainsi qu'un supplément dû aux tampons
+d'écritures postées.
+
+\newpage
+
+\subsection{Question G1}
+\begin{center}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    \texttt{IMISS} & \texttt{DMISS} & \texttt{UNC} & \texttt{WRITE} \\ \hline
+    $9$ & $9$ & $2$ & $2$ \\ \hline
+  \end{tabular}
+\end{center}
+
+\subsection{Question G2}
+Soit $F$ la fréquence, $n$ le nombre d'instructions de la transaction et $N$ le temps
+total d'execution :
+\begin{center}
+  $F=\frac{n}{N}$\\
+\end{center}
+\begin{center}
+  \begin{tabular}{|c|c|c|}
+    \hline
+     & Temps\_occupation & Fréquence \\ \hline
+     \texttt{IMISS} & 9 & 0.006294\\ \hline
+     \texttt{DMISS} & 9 & 0.006245\\ \hline
+     \texttt{UNC  } & 2 & 0.000924\\ \hline
+     \texttt{WRITE} & 2 & 0.100564\\ \hline
+  \end{tabular}
+\end{center}
+
+\subsection{Question G3}
+\begin{center}
+  $BP=\sum Temps\_occupation \times F$
+\end{center}
+À partir de cette formule, on peut démontrer que la bande passante utilisée par
+un processeur est $BP=0.315827$, soit $31.58\%$, théoriquement $3.1666$ coeurs
+est la limite supportée par le PIBUS avant saturation.
+
+
+\subsection{Bonus : \texttt{atomic\_increment}}
+\lstinputlisting{atomic_increment.s}
 \end{document}

@@ -21,7 +21,7 @@ static int hanging_init(void)
 	hanging_thread = kthread_run(my_hanging_fn, NULL, "my_hanging_fn");
 	pr_warn("Hanging module loaded\n");
 	return 0;
-}
+          
 
 static void hanging_exit(void)
 {

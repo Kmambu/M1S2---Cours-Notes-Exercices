@@ -1,0 +1,205 @@
+
+********************************************************
+******        tp5_top                             ******
+********************************************************
+
+
+                 SEGMENT  TABLE
+
+segment : seg_reset , base = 0xbfc00000 , size = 0x1000 , target = 0 , cached = 1
+segment : seg_kcode , base = 0x80000000 , size = 0x4000 , target = 1 , cached = 1
+segment : seg_kdata , base = 0x82000000 , size = 0x10000 , target = 1 , cached = 1
+segment : seg_kunc , base = 0x81000000 , size = 0x10000 , target = 1 , cached = 0
+segment : seg_code , base = 0x400000 , size = 0x4000 , target = 1 , cached = 1
+segment : seg_stack , base = 0x2000000 , size = 0x80000 , target = 1 , cached = 1
+segment : seg_data , base = 0x1000000 , size = 0x80000 , target = 1 , cached = 1
+segment : seg_fbf , base = 0x96000000 , size = 0x10000 , target = 3 , cached = 0
+segment : seg_tty , base = 0x90000000 , size = 0x80 , target = 2 , cached = 0
+segment : seg_icu , base = 0x9f000000 , size = 0x100 , target = 4 , cached = 0
+segment : seg_tim , base = 0x91000000 , size = 0x80 , target = 5 , cached = 0
+segment : seg_dma , base = 0x93000000 , size = 0x20 , target = 6 , cached = 0
+segment : seg_ioc , base = 0x92000000 , size = 0x20 , target = 7 , cached = 0
+
+
+
+Instanciation of PibuBcu : bcu
+    nb_master = 10
+    nb_target = 8
+    time_out  = 100
+
+Instanciation of PibusSimpleRam : rom
+    latency = 0
+    segment seg_reset | base = 0xbfc00000 | size = 0x1000
+
+Instanciation of PibusSimpleRam : ram
+    latency = 0
+    segment seg_kcode | base = 0x80000000 | size = 0x4000
+    segment seg_kdata | base = 0x82000000 | size = 0x10000
+    segment seg_kunc | base = 0x81000000 | size = 0x10000
+    segment seg_code | base = 0x400000 | size = 0x4000
+    segment seg_stack | base = 0x2000000 | size = 0x80000
+    segment seg_data | base = 0x1000000 | size = 0x80000
+
+Instanciation of PibusMultiTty : tty
+    ntty = 8
+    segment seg_tty | base = 0x90000000 | size = 0x80
+
+Instanciation of PibusFrameBuffer : fbf
+    latency = 0
+    segment seg_fbf | base = 0x96000000 | size = 0x10000
+
+Instanciation of PibusIcu : icu
+    irq_in  = 12
+    irq_out = 8
+    segment seg_icu | base = 0x9f000000 | size = 0x100
+
+Instanciation of PibusMultiTimer : tim
+    ntimer = 8
+    segment seg_tim | base = 0x91000000 | size = 0x80
+
+Instanciation of PibusDma : dma
+    burst length = 10
+    segment seg_dma | base = 0x93000000 | size = 0x20
+
+Instanciation of PibusBlockDevice : ioc
+    file_name  = Makefile
+    block_size = 512
+    latency    = 1000
+    segment seg_ioc | base = 0x92000000 | size = 0x20
+
+Instanciation of PibusMips32Xcache : proc[0]
+    proc_id      = 0
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+Instanciation of PibusMips32Xcache : proc[1]
+    proc_id      = 1
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+Instanciation of PibusMips32Xcache : proc[2]
+    proc_id      = 2
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+Instanciation of PibusMips32Xcache : proc[3]
+    proc_id      = 3
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+Instanciation of PibusMips32Xcache : proc[4]
+    proc_id      = 4
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+Instanciation of PibusMips32Xcache : proc[5]
+    proc_id      = 5
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+Instanciation of PibusMips32Xcache : proc[6]
+    proc_id      = 6
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+Instanciation of PibusMips32Xcache : proc[7]
+    proc_id      = 7
+    icache_ways  = 1
+    icache_sets  = 16
+    icache_words = 8
+    dcache_ways  = 1
+    dcache_sets  = 16
+    dcache_words = 8
+    wbuf_depth   = 8
+    snoop        = 0
+
+bcu : connected
+ram : connected
+rom : connected
+tty : connected
+tim : connected
+fbf : connected
+icu : connected
+dma : connected
+ioc : connected
+procs : connected
+
+Loading at 0xbfc00000 size 0x1000: seg_reset 
+Loading at 0x80000000 size 0x4000: seg_kcode 
+Loading at 0x82000000 size 0x10000: seg_kdata 
+Loading at 0x81000000 size 0x10000: seg_kunc 
+Loading at 0x400000 size 0x4000: seg_code 
+Loading at 0x2000000 size 0x80000: nothing
+Loading at 0x1000000 size 0x80000: seg_data 
+Loading at 0xbfc00000 size 0x1000: seg_reset 
+Loading at 0x80000000 size 0x4000: seg_kcode 
+Loading at 0x82000000 size 0x10000: seg_kdata 
+Loading at 0x81000000 size 0x10000: seg_kunc 
+Loading at 0x400000 size 0x4000: seg_code 
+Loading at 0x2000000 size 0x80000: nothing
+Loading at 0x1000000 size 0x80000: seg_data 
+*** proc[0] at cycle 1537766
+- INSTRUCTIONS       = 501300
+- CPI                = 3.06756
+- CACHED READ RATE   = 0.266038
+- UNCACHED READ RATE = 0.00130261
+- WRITE RATE         = 0.142809
+- IMISS RATE         = 0.00845402
+- DMISS RATE         = 0.00818805
+- IMISS COST         = 71.5392
+- DMISS COST         = 58.0357
+- UNC COST           = 58.2282
+- WRITE COST         = 7.19707
+bcu : Statistics
+master 0 : n_req = 77573 , n_wait_cycles = 1221027 , access time = 15.7404
+master 1 : n_req = 77576 , n_wait_cycles = 1221420 , access time = 15.7448
+master 2 : n_req = 77593 , n_wait_cycles = 1220536 , access time = 15.73
+master 3 : n_req = 77579 , n_wait_cycles = 1221207 , access time = 15.7415
+master 4 : n_req = 77587 , n_wait_cycles = 1220690 , access time = 15.7332
+master 5 : n_req = 77572 , n_wait_cycles = 1221075 , access time = 15.7412
+master 6 : n_req = 77558 , n_wait_cycles = 1221241 , access time = 15.7462
+master 7 : n_req = 77566 , n_wait_cycles = 1221231 , access time = 15.7444
+master 8 : n_req = 0 , n_wait_cycles = 0 , access time = -nan
+master 9 : n_req = 0 , n_wait_cycles = 0 , access time = -nan

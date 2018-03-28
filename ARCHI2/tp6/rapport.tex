@@ -1,0 +1,257 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\renewcommand{\arraystretch}{1.5}
+\setcounter{secnumdepth}{0}
+\author{Kevin Mambu}
+\date{\today}
+\title{M1 SESI 2017-2018\\Architecture Multi-Processeurs\\TP6 : Interruptions
+vectorisées \\ Communications avec les périphériques}
+
+\begin{document}
+\maketitle
+
+\section{A) Objectifs}
+Le but de ce TP est d’analyser les mécanismes de communication par interruptions
+entre les périphériques et le système d'exploitation. Dans une première partie
+de ce TP, on illustre sur une architecture bi-processeurs le mécanisme des
+interruptions vectorisées en utilisant un Timer programmable, capable de générer
+des interrutions périodiques. Dans une seconde partie, on analyse en détail le
+mécanisme permettant à un programme de lire des catactères à partir d'un terminal
+TTY.
+\newline
+On dit qu'un périphérique est "mappé" en mémoire lorsqu'il possède des
+registres adressables par le logiciel (au moyen d’instructions de lecture ou
+d’écriture du type lw ou sw).
+
+\begin{itemize}
+  \item Les registres accessibles en écriture permettent au système
+  d'exploitation de configurer les périphériques, ou de leur envoyer des
+  commandes.
+  \item Les registres accessibles en lecture permettent au système
+  d'exploitation d'obtenir des informations sur l'état du périphérique.
+\end{itemize}
+
+Pour communiquer avec le système d'exploitation, les périphériques utilisent des
+interruptions : Une interruption, ou IRQ (Interrupt ReQuest) est un signal
+booleen actif à l'état haut, qui permet à à un périphérique de "voler " quelques
+cycles à un processeur pour exécuter une ISR (Interrupt Service Routine). Ces
+ISR ont généralement pour rôle d'écrire dans des tampons mémoire appartenant au
+système d'exploitation. Ces tampons de communication sont spécifiques pour
+chaque type de périphérique.
+\newline
+L’architecture matérielle est identique à l'architecture matérielle définie pour
+le TP5, mais on utilisera seulement deux processeurs.
+
+\section{B) Architecture matérielle}
+\begin{center}
+  \includegraphics[width=14cm]{tp6_topcell.png}
+\end{center}
+
+\section{C) Composants périphériques}
+Le composant matériel PibusIcu, est un concentrateur d’interruptions vectorisée.
+Ce composant est souvent appelé PIC (Programmable Interrupt Controller) dans les
+PCs. Le concentrateur d'interruptions utilisé ici peut concentrer jusque 32
+lignes d'interruptions IRQ\_IN[I] en entrée (provenant de différents
+périphériques), vers une seule ligne d'interruption en sortie IRQ\_OUT (connectée
+à un processeur). Il contient un grand "OU" cablé: Il suffit qu'une seule entrée
+IRQ\_IN[i] soit active (état haut) et non masquée, pour que IRQ\_OUT passe à
+l'état haut.
+\newline
+Le composant ICU utilisé contient un encodeur de priorité qui implémente un
+mécanisme de priorité fixe : si plusieurs lignes d'interruption entrantes
+IRQ\_IN[i] sont actives simultanément, le registre adressable IT\_VECTOR
+contient l'index de l'interruption active qui a l'index le plus petit. Enfin, ce
+composant permet au logiciel de masquer individuellement chacune des 32 lignes
+d'interruption entrantes, en écrivant un mot de 32 bits dans le registre
+IT\_MASK du composant PibusIcu.
+\newline
+Le composant PibusIcu est un périphérique multi-canaux: Quand il y a plusieurs
+processeurs P[k], le contrôleur d'interruptions possède autant de sorties
+IRQ\_OUT[k] qu'il y a de processeurs P[k]. Chaque canal [k] correspond à une
+sortie IRQ\_OUT[k], et se comporte comme un concentrateur d'interruptions
+indépendant. La seule chose partagée par les différents canaux sont les 32
+signaux entrants IRQ\_IN[i]. Si il y a plusieurs processeurs, le composant
+PibusIcu contient un registre de masque spécifique pour chaque canal, ce qui
+permet au système d'exploitation de décider, pour chaque interruption IRQ\_IN[i],
+à quel processeur elle va être transmise.
+\newline
+Le composant matériel PibusMultiTimer est également un périphérique multi-canaux.
+Il contient plusieurs timers programmables. Chaque timer a pour fonction de
+générer des interruptions périodiques, programmables par logiciel. Chaque timer
+possède sa propre ligne d'interruption. Le code exécuté en cas d’interruption
+générée par le timer est défini par la routine de traitement de l’interruption
+\_isr\_timer (ISR signifie Interrupt Routine Service).
+\newline
+Le composant matériel PibusMultiTty a déjà été utilisé dans les TPs précédents.
+Il contrôle plusieurs terminaux TTY indépendants. Chaque terminal possède une
+ligne d'interruption qui lui permet de signaler qu'un caractère a été saisi au
+clavier. Cette interruption peut être utilisée par le système, lorsqu'on ne
+souhaite pas utiliser un mécanisme de scrutation pour acquérir les caractères du
+clavier. Le code exécuté en cas d’interruption générée par le TTY est défini par
+la routine de traitement de l’interruption \_isr\_tty\_get.
+\newline
+{\it Les spécifications sont en annexe}
+
+\subsection{Question C1}
+Le composant {\bf PibusMultiTimer} est une cible et non un maître sur le bus
+parce que :
+\begin{itemize}
+  \item Elle n'émet pas de données sur le bus indépendamment d'une requête
+  de la cible.
+  \item Toute emission d'interruption (TIMER\_IRQ) est en réalité à la demande
+  du système d'exploitation.
+\end{itemize}
+{\bf PibusMultiTimer} est d'avantage un contrôleur de timers indépendants :
+\texttt{ntimer} est le nombre de timers indépendants sous {\bf PibusMultiTimer}.
+\newline
+{\it Regarder l'annexe des spécifications pour les registres adressables et
+leurs offsets par rapport à l'adresse de base du segment SEG\_TIMER\_BASE}
+
+\subsection{Question C2}
+Le composant {\bf PibusMultiTimer} est une cible et non un maître sur le bus
+parce que :
+\begin{itemize}
+  \item Elle n'émet pas de données sur le bus indépendamment d'une requête
+  de la cible.
+  \item Même si à la suite de la sortie de l'ICU, \texttt{IRQ\_OUT}, un accès
+  mémoire est fait (lecture/écriture de registres), cela est la conséquence
+  de l'ISR associée à l'interruption et exécutée par le processeur.
+  \item Et elle est également dépendante du système d'exploitation.
+\end{itemize}
+\texttt{nirq} est le nombre de signaux d'interruptions branchés sur l'ICU (cela
+indique par conséquence le nombre de périphériques sur l'architecture).
+\newline
+L'ICU du PIBUS est un contrôleur multi-canaux, \texttt{nproc} indique le nombre
+de processeurs reliés à l'ICU et ainsi le nombre de sorties IRQ\_OUT.
+\newline
+L'ICU est un contrôleur reprogrammable. Lors du boot, le code du reset a parmi
+ses tâches d'effectuer le routage interne de l'ICU des requêtes entrantes
+IRQ\_IN[\texttt{nirq}] vers IRQ\_OUT[\texttt{nproc}]. Le système d'exploitation
+peut également impacter sur le routage interne.
+\newline
+Soit n l'identifiant du processeur au sein de l'architecture vis-à-vis de l'ICU
+et l'adresse de base du segment SEG\_ICU\_BASE, chaque processeur est associé à
+un sous-segment dont l'adresse de base est $SEG\_ICU\_BASE + n \times 5$. Les
+offsets et les fonctionnalités de chaque registe sont décrits dans l'annexe.
+
+\subsection{Question C3}
+L'adresse de base de l'ICU SEG\_ICU\_BASE doit être alignée multiple de $32
+\times 8$ octets parce que chaque proceseur lui est attribué 5 registres, soit
+20 octets, qu'on rehausse à 32 par souci d'alignement. Relâcher cette
+contrainte aurait pour conséquence de limiter le nombre de sous-canaux
+correctement utilisables, car l'un d'entre eux n'aurait pas de mapping mémoire
+suffisant pour ses registres.
+
+\subsection{Question C4}
+Rappelons que nous sommes sur une architecture bi-processeurs ($\texttt{NPROC}
+=2$).
+\begin{itemize}
+  \item IRQ\_IN[0] $\rightarrow$ DMA
+  \item IRQ\_IN[1] $\rightarrow$ IOC
+  \item IRQ\_IN[2+2i] $\rightarrow$ TIMER[i]
+  \item IRQ\_IN[3+3i] $\rightarrow$ TTY[i]
+\end{itemize}
+
+\section{D) Lancement des tâches}
+
+\subsection{Question D2}
+\begin{center}
+  \begin{tabular}{|c|c|}
+    \hline
+    {\it main\_prime} & {\it main\_pgcd} \\ \hline
+    \texttt{0x004012dc} & \texttt{0x004013f0} \\ \hline
+  \end{tabular}
+\end{center}
+
+\subsection{Question D3}
+Le flag de GCC, \texttt{freestanding} permet d'assumer que le début du programme
+principal ne sera pas nécessairement à l'adresse \texttt{main}. L'option
+\texttt{no-gpopt} demande à GCC de ne pas utiliser de pointeur global vers le
+segment seg\_data. De ce fait, GCC utilise le mécanisme d'accès de labélisation
+des données, ce qui nous fait notre table de saut.
+
+\subsection{Question D4}
+Le programme ne peut pas notifier de l'entrée d'un caractère car le processeur
+n'est pas connecté à l'ICU et donc ne peut pas acquitter de l'interruption.
+
+\section{E) Activation du timer}
+On veut maintenant activer les interruptions provenant du TIMER.
+On rappelle qu'à chacune des lignes d’interruption est associée une routine
+d’interruption (ISR ou Interrupt Service Routine) qui est spécifique au
+périphérique qui a généré l’interruption, et qui est exécutée par le processeur
+lorsque les interruptions ne sont pas masquées. Activer les interruptions du
+TIMER est donc à équivalent à lancer sur chacun des 2 processeurs de
+l'architecture une tâche de fond, consistant à exécuter périodiquement
+l'ISR \_isr\_timer.
+
+\subsection{Question E1}
+Pour se brancher à l'ISR de l'interruption concernée $i$, le processeur passe
+par le tableau interrupt\_vector, qui est une table de saut, puis saute à
+l'adresse stockée à interrupt\_vector[i].
+\newline
+Séquence d'appels de fonctions jusqu'à isr\_timer :
+\begin{itemize}
+  \item Point d'entrée au GIET
+  \item \texttt{r27 <= Cause register}
+  \item \texttt{r26 <= \_cause\_vector}
+  \item \texttt{r26 <= \&\_cause\_vector\[XCODE\]}
+  \item \texttt{r26 <= \_cause\_vector[XCODE]}
+  \item Branchement à l'adresse dans \texttt{r26} (\_int\_handler)
+  \item Réservation d'espace sur la pile d'appel
+  \item Sauvegarde de contexte (\texttt{r1-r31, HI, LO, EPC})
+  \item Brancchement à la fonction C \texttt{\_int\_demux}, de irq\_handler.c
+  \item Lecture du registre de l'ICU \_ICU\_IT\_VECTOR
+  \item S'il n'y a pas d'interruption active (lecture retourne 32)
+  $\rightarrow$ retour à \_irq\_handler, sinon...
+  \item \texttt{isr <= \_interrupt\_vector[index]} (\_isr\_timer)
+  \item Branchement à la routine \_isr\_timer
+\end{itemize}
+
+\subsection{Question E2}
+\_isr\_timer gère les deux timers connectés respectivement aux processeurs 0 et
+1. Plus précisément, pour un timer TIMER[id], il acquitte l'interruption du
+timer puis affiche un message sur le TTY.
+
+\subsection{Question E3}
+
+
+\end{document}
