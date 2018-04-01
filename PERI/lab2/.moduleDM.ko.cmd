@@ -1,0 +1,1 @@
+cmd_/users/enseig/debbaghi/peri/lab2/moduleDM.ko := /users/enseig/franck/peri/arm-bcm2708hardfp-linux-gnueabi/bin/bcm2708hardfp-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /users/enseig/debbaghi/peri/lab2/moduleDM.ko /users/enseig/debbaghi/peri/lab2/moduleDM.o /users/enseig/debbaghi/peri/lab2/moduleDM.mod.o

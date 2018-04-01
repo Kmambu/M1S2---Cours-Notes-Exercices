@@ -1,8 +1,8 @@
-cmd_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.o := gcc -Wp,-MD,/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/.taskmonitor.o.d  -nostdinc -isystem /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include -I./arch/x86/include -I./arch/x86/include/generated/uapi -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-PIE -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -funit-at-a-time -maccumulate-outgoing-args -DCONFIG_X86_X32_ABI -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -DCONFIG_AS_CFI_SECTIONS=1 -DCONFIG_AS_FXSAVEQ=1 -DCONFIG_AS_SSSE3=1 -DCONFIG_AS_CRC32=1 -DCONFIG_AS_AVX=1 -DCONFIG_AS_AVX2=1 -DCONFIG_AS_AVX512=1 -DCONFIG_AS_SHA1_NI=1 -DCONFIG_AS_SHA256_NI=1 -pipe -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -DRETPOLINE -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-int-in-bool-context -O2 --param=allow-store-data-races=0 -DCC_HAVE_ASM_GOTO -Wframe-larger-than=2048 -fno-stack-protector -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -femit-struct-debug-baseonly -fno-var-tracking -pg -mfentry -DCC_USING_FENTRY -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fno-stack-check -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -Werror=incompatible-pointer-types  -DMODULE  -DKBUILD_BASENAME='"taskmonitor"'  -DKBUILD_MODNAME='"taskmonitor"' -c -o /home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.o /home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.c
+cmd_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o := gcc -Wp,-MD,/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/.taskmonitor.o.d  -nostdinc -isystem /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include -I./arch/x86/include -I./arch/x86/include/generated/uapi -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-PIE -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -funit-at-a-time -maccumulate-outgoing-args -DCONFIG_X86_X32_ABI -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -DCONFIG_AS_CFI_SECTIONS=1 -DCONFIG_AS_FXSAVEQ=1 -DCONFIG_AS_SSSE3=1 -DCONFIG_AS_CRC32=1 -DCONFIG_AS_AVX=1 -DCONFIG_AS_AVX2=1 -DCONFIG_AS_AVX512=1 -DCONFIG_AS_SHA1_NI=1 -DCONFIG_AS_SHA256_NI=1 -pipe -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -DRETPOLINE -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-int-in-bool-context -O2 --param=allow-store-data-races=0 -DCC_HAVE_ASM_GOTO -Wframe-larger-than=2048 -fno-stack-protector -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -femit-struct-debug-baseonly -fno-var-tracking -pg -mfentry -DCC_USING_FENTRY -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fno-stack-check -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -Werror=incompatible-pointer-types  -DMODULE  -DKBUILD_BASENAME='"taskmonitor"'  -DKBUILD_MODNAME='"taskmonitor"' -c -o /home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o /home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.c
 
-source_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.o := /home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.c
+source_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o := /home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.c
 
-deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.o := \
+deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o := \
   include/linux/init.h \
     $(wildcard include/config/debug/rodata.h) \
   include/linux/compiler.h \
@@ -797,7 +797,74 @@ deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonito
   include/asm-generic/sections.h \
   arch/x86/include/asm/extable.h \
   include/linux/kthread.h \
+  include/linux/slab.h \
+    $(wildcard include/config/debug/slab.h) \
+    $(wildcard include/config/failslab.h) \
+    $(wildcard include/config/have/hardened/usercopy/allocator.h) \
+    $(wildcard include/config/slab.h) \
+    $(wildcard include/config/slub.h) \
+  include/linux/kmemleak.h \
+    $(wildcard include/config/debug/kmemleak.h) \
+  include/linux/kasan.h \
+  include/linux/fs.h \
+    $(wildcard include/config/fs/posix/acl.h) \
+    $(wildcard include/config/cgroup/writeback.h) \
+    $(wildcard include/config/ima.h) \
+    $(wildcard include/config/fsnotify.h) \
+    $(wildcard include/config/fs/encryption.h) \
+    $(wildcard include/config/file/locking.h) \
+    $(wildcard include/config/quota.h) \
+    $(wildcard include/config/fs/dax.h) \
+    $(wildcard include/config/mandatory/file/locking.h) \
+    $(wildcard include/config/migration.h) \
+  include/linux/kdev_t.h \
+  include/uapi/linux/kdev_t.h \
+  include/linux/dcache.h \
+  include/linux/rculist_bl.h \
+  include/linux/list_bl.h \
+  include/linux/bit_spinlock.h \
+  include/linux/lockref.h \
+    $(wildcard include/config/arch/use/cmpxchg/lockref.h) \
+  include/linux/stringhash.h \
+    $(wildcard include/config/dcache/word/access.h) \
+  include/linux/hash.h \
+    $(wildcard include/config/have/arch/hash.h) \
+  include/linux/path.h \
+  include/linux/list_lru.h \
+  include/linux/shrinker.h \
+  include/linux/radix-tree.h \
+    $(wildcard include/config/radix/tree/multiorder.h) \
+  include/linux/semaphore.h \
+  include/uapi/linux/fiemap.h \
+  include/linux/migrate_mode.h \
+  include/linux/blk_types.h \
+    $(wildcard include/config/blk/dev/integrity.h) \
+  include/linux/bvec.h \
+  include/linux/delayed_call.h \
+  include/uapi/linux/fs.h \
+  include/linux/quota.h \
+    $(wildcard include/config/quota/netlink/interface.h) \
+  include/linux/percpu_counter.h \
+  include/uapi/linux/dqblk_xfs.h \
+  include/linux/dqblk_v1.h \
+  include/linux/dqblk_v2.h \
+  include/linux/dqblk_qtree.h \
+  include/linux/projid.h \
+  include/uapi/linux/quota.h \
+  include/linux/nfs_fs_i.h \
+  include/linux/fcntl.h \
+  include/uapi/linux/fcntl.h \
+  arch/x86/include/uapi/asm/fcntl.h \
+  include/uapi/asm-generic/fcntl.h \
+  include/linux/uaccess.h \
+  arch/x86/include/asm/uaccess.h \
+    $(wildcard include/config/x86/intel/usercopy.h) \
+  include/linux/kasan-checks.h \
+  arch/x86/include/asm/smap.h \
+    $(wildcard include/config/x86/smap.h) \
+  arch/x86/include/asm/uaccess_64.h \
+  include/uapi/asm-generic/errno-base.h \
 
-/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.o: $(deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.o)
+/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o: $(deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o)
 
-$(deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp6/ex4/taskmonitor.o):
+$(deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o):

@@ -1,0 +1,8 @@
+#ifndef _LIBGPIO_H
+#define _LIBGPIO_H
+int gpio_init(void *ptr);
+int is_gpio_valid(int gpio);
+int gpio_setup(int gpio, int direction);
+int gpio_read(int gpio, int* val);
+int gpio_write(int gpio, int val);
+#endif

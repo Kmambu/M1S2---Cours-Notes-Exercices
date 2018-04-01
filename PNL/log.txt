@@ -5,10 +5,26 @@ WARNING: Image format was not specified for 'myHome.img' and probing guessed raw
          Automatically detecting the format is dangerous for raw images, write operations on block 0 will be restricted.
          Specify the 'raw' format explicitly to remove the restrictions.
 
-(qemu-system-x86_64:20750): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f639fd86310 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
+(qemu-system-x86_64:22020): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f0a6605a1f0 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
 
-(qemu-system-x86_64:20750): Gtk-WARNING **: gtk_widget_size_allocate(): attempt to allocate widget with width -1059014679 and height 400
+(qemu-system-x86_64:22020): Gtk-WARNING **: gtk_widget_size_allocate(): attempt to allocate widget with width -2029758487 and height 400
 
-(qemu-system-x86_64:20750): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f639fd86510 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
+(qemu-system-x86_64:22020): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f0a6605a3f0 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
 
-(qemu-system-x86_64:20750): Gtk-WARNING **: gtk_widget_size_allocate(): attempt to allocate widget with width -1059014679 and height 400
+(qemu-system-x86_64:22020): Gtk-WARNING **: gtk_widget_size_allocate(): attempt to allocate widget with width -2029758487 and height 400
+
+(qemu-system-x86_64:22020): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f0a6605a1f0 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
+
+(qemu-system-x86_64:22020): Gtk-WARNING **: gtk_widget_size_allocate(): attempt to allocate widget with width -2029758487 and height 400
+
+(qemu-system-x86_64:22020): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f0a6605a3f0 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
+
+(qemu-system-x86_64:22020): Gtk-WARNING **: gtk_widget_size_allocate(): attempt to allocate widget with width -2029758487 and height 400
+
+(qemu-system-x86_64:22020): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f0a6605a1f0 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
+
+(qemu-system-x86_64:22020): Gtk-WARNING **: gtk_widget_size_allocate(): attempt to allocate widget with width -2029758487 and height 400
+
+(qemu-system-x86_64:22020): Gtk-WARNING **: Allocating size to GtkScrollbar 0x7f0a6605a3f0 without calling gtk_widget_get_preferred_width/height(). How does the code know the size to allocate?
+
+(qemu-system-x86_64:22020): Gtk-WARNING **: gtk_widget_size_allocate(): attempt to allocate widget with width -2029758487 and height 400
