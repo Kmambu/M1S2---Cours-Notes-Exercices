@@ -50,8 +50,8 @@ static struct task_monitor {
 bool get_sample(struct task_monitor *tm, struct task_sample *sample)
 {
 	struct pid *pid = tm->pid;
-	struct task_struct *task;
-	if (pid_alive(get_pid_task(pid, PIDTYPE_PID)))
+	struct task_struct *task = get_pid_task(pid, PIDTYPE_PID);
+	if (pid_alive(task))
 		return 0;
 	task = get_pid_task(pid,PIDTYPE_PID);
 	sample->utime = task->utime;
@@ -109,6 +109,7 @@ ssize_t taskmonitor_show(struct kobject *kobj, struct kobj_attribute *attr,
 	char b[TASKMON_BUFSIZ];
 	struct task_sample pos;
 	struct task_sample *posp = &pos;
+	strcpy(buf,"");
 	list_for_each_entry_reverse(posp,&(task_monitor.samples.list),list)
 	{
 		mutex_lock(&(task_monitor.mutex));
@@ -117,7 +118,7 @@ ssize_t taskmonitor_show(struct kobject *kobj, struct kobj_attribute *attr,
 		if(ret + size >= PAGE_SIZE)
 			break;
 		ret += size;
-		strncpy(buf,b,size);
+		copy_to_user(buf,b,size);
 		pr_warn("%s",b);
 	}
 	return ret;
