@@ -20,3 +20,4 @@ linux-4.9.82
 # Ignore massive folders
 PSESI
 FPGA1
+*.bin.txt
