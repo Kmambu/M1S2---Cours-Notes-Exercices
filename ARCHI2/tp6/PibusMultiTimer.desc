@@ -1,0 +1,41 @@
+///////////////////////////////////////////////////////////////////////////////
+// File : pibus_multi_timer.h
+// Date : 05/03/2010
+// Author : A.Greiner 
+// It is released under the GNU Public License.
+// Copyright : UPMC-LIP6
+///////////////////////////////////////////////////////////////////////////////
+// This component is a generic timer : It contains up to 32 independant
+// software controled timers.
+// The timer index [i] is defined by the 5 bits ADDRESS[8:4].
+// The TIMER_COUNT[i] registers used to generate periodic interrupts 
+// are not directly addressables.
+//
+// Each timer defines 4 memory mapped registers :
+// - TIMER_VALUE[i]	(0x0) 	(read/write)
+// A read request returns the value contained in TIMER_VALUE[i].
+// A write request sets a new value in TIMER_VALUE[i].
+// - TIMER_RUNNING[i] 	(0x4)	(read/write)
+// A write request of a zero value gives a false value to this register.
+// A write request of a non-zero value gives a true value to this register.
+// When this Boolean is true, the TIMER_COUNT[i] register is 
+// decremented and interrupt IRQ[i] is enabled.
+// - TIMER_PERIOD[i]	(0x8)	(read/write)
+// A write request writes a new value in the TIMER_PERIOD[i] register, 
+// and the new value is also  written in TIMER_COUNT[i]. 
+// The TIMER_RUNNING[i] register is set to false.  
+// A read request returns the value contained in the TIMER_PERIOD[i] register. 
+// - TIMER_IRQ[i]	(0xc)	(read/write)
+// A write request resets the TIMER_IRQ[i] register to false.
+// A read request returns the 0 value if TIMER_IRQ[i] is false.
+//
+// This component cheks address for segmentation violation,
+// and can be used as a default target.
+///////////////////////////////////////////////////////////////////////////////
+// This component has 4 "constructor" parameters :
+// - sc_module_name	name		: instance name
+// - uint32_t 		tgtid		: target index.
+// - PibusSegmentTable 	segtab		: segment table.
+// - uint32_t 		ntimer		: number of independant timers 
+////////////////////////////////////////////////////////////////////////////////
+

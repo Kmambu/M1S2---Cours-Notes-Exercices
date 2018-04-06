@@ -87,48 +87,6 @@ le TP5, mais on utilisera seulement deux processeurs.
 \end{center}
 
 \section{C) Composants périphériques}
-Le composant matériel PibusIcu, est un concentrateur d’interruptions vectorisée.
-Ce composant est souvent appelé PIC (Programmable Interrupt Controller) dans les
-PCs. Le concentrateur d'interruptions utilisé ici peut concentrer jusque 32
-lignes d'interruptions IRQ\_IN[I] en entrée (provenant de différents
-périphériques), vers une seule ligne d'interruption en sortie IRQ\_OUT (connectée
-à un processeur). Il contient un grand "OU" cablé: Il suffit qu'une seule entrée
-IRQ\_IN[i] soit active (état haut) et non masquée, pour que IRQ\_OUT passe à
-l'état haut.
-\newline
-Le composant ICU utilisé contient un encodeur de priorité qui implémente un
-mécanisme de priorité fixe : si plusieurs lignes d'interruption entrantes
-IRQ\_IN[i] sont actives simultanément, le registre adressable IT\_VECTOR
-contient l'index de l'interruption active qui a l'index le plus petit. Enfin, ce
-composant permet au logiciel de masquer individuellement chacune des 32 lignes
-d'interruption entrantes, en écrivant un mot de 32 bits dans le registre
-IT\_MASK du composant PibusIcu.
-\newline
-Le composant PibusIcu est un périphérique multi-canaux: Quand il y a plusieurs
-processeurs P[k], le contrôleur d'interruptions possède autant de sorties
-IRQ\_OUT[k] qu'il y a de processeurs P[k]. Chaque canal [k] correspond à une
-sortie IRQ\_OUT[k], et se comporte comme un concentrateur d'interruptions
-indépendant. La seule chose partagée par les différents canaux sont les 32
-signaux entrants IRQ\_IN[i]. Si il y a plusieurs processeurs, le composant
-PibusIcu contient un registre de masque spécifique pour chaque canal, ce qui
-permet au système d'exploitation de décider, pour chaque interruption IRQ\_IN[i],
-à quel processeur elle va être transmise.
-\newline
-Le composant matériel PibusMultiTimer est également un périphérique multi-canaux.
-Il contient plusieurs timers programmables. Chaque timer a pour fonction de
-générer des interruptions périodiques, programmables par logiciel. Chaque timer
-possède sa propre ligne d'interruption. Le code exécuté en cas d’interruption
-générée par le timer est défini par la routine de traitement de l’interruption
-\_isr\_timer (ISR signifie Interrupt Routine Service).
-\newline
-Le composant matériel PibusMultiTty a déjà été utilisé dans les TPs précédents.
-Il contrôle plusieurs terminaux TTY indépendants. Chaque terminal possède une
-ligne d'interruption qui lui permet de signaler qu'un caractère a été saisi au
-clavier. Cette interruption peut être utilisée par le système, lorsqu'on ne
-souhaite pas utiliser un mécanisme de scrutation pour acquérir les caractères du
-clavier. Le code exécuté en cas d’interruption générée par le TTY est défini par
-la routine de traitement de l’interruption \_isr\_tty\_get.
-\newline
 {\it Les spécifications sont en annexe}
 
 \subsection{Question C1}
@@ -188,7 +146,11 @@ Rappelons que nous sommes sur une architecture bi-processeurs ($\texttt{NPROC}
   \item IRQ\_IN[0] $\rightarrow$ DMA
   \item IRQ\_IN[1] $\rightarrow$ IOC
   \item IRQ\_IN[2+2i] $\rightarrow$ TIMER[i]
-  \item IRQ\_IN[3+3i] $\rightarrow$ TTY[i]
+  \item IRQ\_IN[3+2i] $\rightarrow$ TTY[i], soit :
+  \item IRQ\_IN[3] $\rightarrow$ TTY[0]
+  \item IRQ\_IN[5] $\rightarrow$ TTY[1]
+  \item IRQ\_IN[2] $\rightarrow$ TIMER[0]
+  \item IRQ\_IN[4] $\rightarrow$ TIMER[1]
 \end{itemize}
 
 \section{D) Lancement des tâches}
@@ -214,14 +176,6 @@ Le programme ne peut pas notifier de l'entrée d'un caractère car le processeur
 n'est pas connecté à l'ICU et donc ne peut pas acquitter de l'interruption.
 
 \section{E) Activation du timer}
-On veut maintenant activer les interruptions provenant du TIMER.
-On rappelle qu'à chacune des lignes d’interruption est associée une routine
-d’interruption (ISR ou Interrupt Service Routine) qui est spécifique au
-périphérique qui a généré l’interruption, et qui est exécutée par le processeur
-lorsque les interruptions ne sont pas masquées. Activer les interruptions du
-TIMER est donc à équivalent à lancer sur chacun des 2 processeurs de
-l'architecture une tâche de fond, consistant à exécuter périodiquement
-l'ISR \_isr\_timer.
 
 \subsection{Question E1}
 Pour se brancher à l'ISR de l'interruption concernée $i$, le processeur passe
@@ -233,7 +187,7 @@ Séquence d'appels de fonctions jusqu'à isr\_timer :
   \item Point d'entrée au GIET
   \item \texttt{r27 <= Cause register}
   \item \texttt{r26 <= \_cause\_vector}
-  \item \texttt{r26 <= \&\_cause\_vector\[XCODE\]}
+  \item \texttt{r26 <= \&\_cause\_vector[XCODE]}
   \item \texttt{r26 <= \_cause\_vector[XCODE]}
   \item Branchement à l'adresse dans \texttt{r26} (\_int\_handler)
   \item Réservation d'espace sur la pile d'appel
@@ -251,7 +205,130 @@ Séquence d'appels de fonctions jusqu'à isr\_timer :
 1. Plus précisément, pour un timer TIMER[id], il acquitte l'interruption du
 timer puis affiche un message sur le TTY.
 
-\subsection{Question E3}
+\subsection{Question E6}
+Rappel, les signaux \texttt{sel\_xxx} dinstinguent quel est la cible du
+processeur via le PIBUS à un cycle donné.
+\begin{itemize}
+  \item Le processeur 0 écrit la première valeur dans le vecteur d'interruption
+  au cycle 52 {\it (rappel : le vecteur d'interruptions est situé à ce moment
+  dans la ram, car faisant partie de \texttt{sys.bin})}.
+  \item Le registre ICU\_MASK[0] est configuré au cycle 56.
+  \item Le TIMER[0] est configuré au cycle 86.
+\end{itemize}
 
+\subsection{Question E7}
+La première interruption du TIMER[0] est reçue au cycle 50093.
 
+\subsection{Question E8}
+\begin{tabular}{|c|p{4cm}|}
+  \hline
+  {\bf Cycle} & {\bf Évenement} \\ \hline
+  100094 & Levée de l'interruption \texttt{TIMER\_IRQ[0]} \\ \hline
+  100114 & Branchement sur le point d'entrée du GIET (0x80000180) \\ \hline
+  100123 & Branchement sur \texttt{\_int\_handler (restore)} \\ \hline
+  100258 & Branchement sur \texttt{\_int\_demux} \\ \hline
+  100494 & Branchement sur \texttt{\_isr\_timer} \\ \hline
+  104348 & Retour à \texttt{\_int\_demux} \\ \hline
+  104354 & Retour à \texttt{\_int\_handler} \\ \hline
+  104423 & Retour au programme utilisateur (\texttt{eret}) \\ \hline
+\end{tabular}
+
+\subsection{Question E9}
+Le GIET est un système d'exploitation non-préemptif, en le sens qu'un processeur
+exécutant une routine bloquante en mode système aura malgré tout ses
+interruptions non-masquées, sauf si explicitement déclaré autrement.
+
+\section{F) Activation des interruptions TTY}
+
+\subsection{Question F1}
+Si le mécanisme de communication par interruption n'était pas asynchrone, alors:
+\begin{itemize}
+  \item Dans un cas où le programme destinataire ne serait pas exécuté par le
+  processeur alors que l'interruption serait levée par le TTY, l'interruption
+  resterait pendante et le contrôleur de TTY serait alors bloqué jusqu'à
+  acquittement de l'interruption. Or, il n'y a aucun destinataire pour acquitter.
+\end{itemize}
+
+\subsection{Question F2}
+Suite d'appels pour lire une chaîne de caractères décimaux :
+\begin{itemize}
+  \item tty\_getw\_irq
+  \begin{itemize}
+    \item sys\_call(SYSCALL\_TTY\_READ\_IRQ,...
+    \begin{itemize}
+      \item syscall
+    \end{itemize}
+    \item tty\_putc
+    \begin{itemize}
+      \item sys\_call(SYSCALL\_TTY\_WRITE,...
+      \begin{itemize}
+        \item syscall
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsection{Question F3}
+La fonction \_isr\_tty\_get est un wrapper de la fonction
+\_isr\_tty\_get\_indexed[0]. Si le tampon \_tty\_get\_buf est plein au moment de
+l'appel de \_isr\_tty\_get, alors la valeur précedemment contenue dans le tampon
+ets supprimée.
+
+\subsection{Question F4}
+\begin{itemize}
+  \item \_tty\_read\_irq récupère le contenu du tampon du TTY associé au
+  processeur appelant, puis met la bascule \_tty\_get\_full à 0 (bascule
+  positionnée à RESET).
+  \item Cette fonction prend en argument l'adresse vers un tampon de reception
+  et une longeur maximale de lecture.
+  \item Si le tampon du TTY est vide, aucune donnée est copiée dans le tampon
+  de reception et la fonction retourne 0.
+  \item \texttt{tty\_id = \_task\_context\_array[(proc\_id*NB\_MAXTASKS + task\_id)*64 + 34]} :
+  \begin{itemize}
+    \item \_task\_context\_array est la table des contextes de tâches, déclarée
+    dans \textit{\texttt{ctx\_handler.c}}.
+    \item La macro \texttt{TASK\_CTXT\_SIZE} définit la taille d'un contexte de
+    tâches, elle est égale à 64.
+    \item On peut deviner que 34 correspond au déplacement nécessaire pour
+    accéder au champ tty\_id d'un contexte de tâches.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Question F5}
+\begin{itemize}
+  \item Les caractères spéciaux traités sont :
+  \begin{itemize}
+    \item \texttt{LF (line feed)} : End Of Line, associé à la touche "Enter".
+    \item \texttt{CR (carriage return)} : retour chariot, associé à la touche
+    "Enter".
+    \item \texttt{DEL} : Suppresion de caractère, associé à la touche "Suppr"
+  \end{itemize}
+  \item En cas de \textit{Decimal String Overflow}, la chaîne de caractères est
+  annulée, la variable recevante est mise à 0, et la fonction retourne 0.
+\end{itemize}
+
+\subsection{Question F6}
+\begin{itemize}
+  \item L'attribut \texttt{volatile} permet d'assurer qu'une variable puisse
+  être modifiée également depuis l'extérieur du programme. Dans notre cas,
+  \_tty\_get\_buf et \_tty\_get\_full sont des registres manipulés également par
+  le contrôleur de TTY.
+  \item Ces registres sont rangés dans le segment \texttt{seg\_tty}.
+  \item Ce segment doit être rangés en non-cachable car ces registres peuvent
+  être modifiés indépendamment des processeurs (modifiés par le contrôleur de
+  TTY).
+\end{itemize}
+
+\newpage
+
+\lstinputlisting{reset.s}
+
+\newpage
+
+\lstinputlisting{PibusIcu.desc}
+\newpage
+\lstinputlisting{PibusMultiTimer.desc}
+\newpage
+\lstinputlisting{PibusMultiTty.desc}
+\end{document}
 \end{document}
