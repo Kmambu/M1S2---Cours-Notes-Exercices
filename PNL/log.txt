@@ -4,4 +4,27 @@ WARNING: Image format was not specified for 'pnl-tp.img' and probing guessed raw
 WARNING: Image format was not specified for 'myHome.img' and probing guessed raw.
          Automatically detecting the format is dangerous for raw images, write operations on block 0 will be restricted.
          Specify the 'raw' format explicitly to remove the restrictions.
-qemu-system-x86_64: terminating on signal 2
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 12:08:11.490: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 12:08:11.490: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:32:16.799: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:32:16.799: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:35:13.986: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:35:13.987: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:36:56.929: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:36:56.930: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:41:34.589: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:41:34.589: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:47:28.130: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
+
+(qemu-system-x86_64:5712): Gtk-WARNING **: 15:47:28.130: gtk_widget_size_allocate(): attempt to allocate widget with width -837051511 and height 400
