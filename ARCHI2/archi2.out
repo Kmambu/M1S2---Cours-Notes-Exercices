@@ -1,0 +1,13 @@
+\BOOKMARK [1][-]{section*.2}{Introduction}{}% 1
+\BOOKMARK [1][-]{section*.3}{Automates d'Etats Finis Communiquants Synchrones}{}% 2
+\BOOKMARK [2][-]{section*.4}{Automates de Mealy vs Automates de Moore}{section*.3}% 3
+\BOOKMARK [1][-]{section*.5}{M\351thode G\351nerale de Synth\350se des FSM}{}% 4
+\BOOKMARK [2][-]{section*.6}{Exemple : capteur de trois '1' cons\351cutifs, MOORE}{section*.5}% 5
+\BOOKMARK [1][-]{section*.7}{Bus Syst\350me : Le PIBUS}{}% 6
+\BOOKMARK [1][-]{section*.8}{Fonctions d'un bus}{}% 7
+\BOOKMARK [1][-]{section*.9}{Caches}{}% 8
+\BOOKMARK [2][-]{section*.10}{Caches de premier niveau L1}{section*.9}% 9
+\BOOKMARK [2][-]{section*.11}{Principes des m\351moire caches}{section*.9}% 10
+\BOOKMARK [2][-]{section*.12}{Vocabulaire}{section*.9}% 11
+\BOOKMARK [2][-]{section*.13}{Sp\351cifications du cache L1 vu en cours}{section*.9}% 12
+\BOOKMARK [2][-]{section*.14}{Sp\351cifications des Interfaces 1}{section*.9}% 13

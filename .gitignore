@@ -19,9 +19,12 @@ PNL/myHome.img
 PNL/pnl-tp.img
 PNL/linux-4.9.82
 PNL/log.txt
+.tmp_versions
 
 # Ignore massive folders
 PSESI
 FPGA1/Projet/DCC_Project
 FPGA1/TP1-3
-*.bin.txt
+FPGA1/ip_repo
+
+# ARCHI2

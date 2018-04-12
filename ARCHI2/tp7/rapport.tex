@@ -117,6 +117,7 @@ transfert DMA par le bais du registre RESET.
 
 \subsection{Question B5}
 \begin{center}
+  \includegraphics[width=9cm]{tp7_master_fsm.png}
   \begin{tabular}{|c|c|}
     \hline
     \multicolumn{2}{|c|}{Transitions de MASTER\_FSM} \\ \hline
@@ -130,7 +131,7 @@ transfert DMA par le bais du registre RESET.
     E'\footnote[1] & $\overline{ERROR}\bullet{READY}\bullet{R\_STOP}$ \\ \hline
     E   & $\overline{ERROR}\bullet{READY}\bullet\overline{R\_STOP}$ \\ \hline
     F   & $ERROR$ \\ \hline
-    G   & $\overline{READY}\bullet{ERROR}$ \\ \hline
+    G   & $\overline{READY}+\overline{ERROR}$ \\ \hline
     H'  & $\overline{READ}$ \\ \hline
     H   & $READ$ \\ \hline
     I   & $true$ \\ \hline
@@ -140,7 +141,7 @@ transfert DMA par le bais du registre RESET.
     K   & $\overline{ERROR}\bullet{READY}\bullet\overline{R\_STOP}\bullet{R\_COUNT}$ \\ \hline
     L   & ${ERROR}$ \\ \hline
     M   & $\overline{ERROR}\bullet{READY}\bullet\overline{R\_STOP}\bullet\overline{R\_COUNT}$ \\ \hline
-    N   & $\overline{READY}\bullet\overline{ERROR}$ \\ \hline
+    N   & $\overline{READY}+\overline{ERROR}$ \\ \hline
     O', P', Q' & $\overline{R\_STOP}$ \\ \hline
     O, P, Q & $R\_STOP$ \\ \hline
   \end{tabular}
@@ -256,6 +257,9 @@ la fonction \_fb\_completed.
   \item Le gain apporté par le parallelisme pipeline par rapport à une
   exécution séquentielle est de 183 cycles, ce qui est bien maîgre gain
   comparé au coût de l'implémentation (ajout d'un if, ajout d'un tampon).
+  \item Ce chiffre est significatif d'une chose : le temps de construction d'un
+  damier est négligeable par face au temps de transfert d'un damier via le
+  contrôleur DMA.
 \end{itemize}
 
 \section{F) Traitement des erreurs}

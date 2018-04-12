@@ -609,7 +609,16 @@ deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonito
     $(wildcard include/config/modules/use/elf/rel.h) \
     $(wildcard include/config/modules/use/elf/rela.h) \
   include/linux/pid.h \
-  include/linux/kthread.h \
+  include/linux/slab.h \
+    $(wildcard include/config/debug/slab.h) \
+    $(wildcard include/config/failslab.h) \
+    $(wildcard include/config/slob.h) \
+    $(wildcard include/config/have/hardened/usercopy/allocator.h) \
+    $(wildcard include/config/slab.h) \
+    $(wildcard include/config/slub.h) \
+  include/linux/kmemleak.h \
+    $(wildcard include/config/debug/kmemleak.h) \
+  include/linux/kasan.h \
   include/linux/sched.h \
     $(wildcard include/config/sched/debug.h) \
     $(wildcard include/config/lockup/detector.h) \
@@ -635,7 +644,6 @@ deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonito
     $(wildcard include/config/rt/group/sched.h) \
     $(wildcard include/config/cgroup/sched.h) \
     $(wildcard include/config/blk/dev/io/trace.h) \
-    $(wildcard include/config/slob.h) \
     $(wildcard include/config/compat/brk.h) \
     $(wildcard include/config/cgroups.h) \
     $(wildcard include/config/virt/cpu/accounting/gen.h) \
@@ -751,6 +759,7 @@ deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonito
     $(wildcard include/config/cgroup/hugetlb.h) \
     $(wildcard include/config/cgroup/pids.h) \
     $(wildcard include/config/cgroup/debug.h) \
+  include/linux/kthread.h \
 
 /home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o: $(deps_/home/kevin/Documents/M1S2-Cours---Notes---Exercices/PNL/tp7/ex1/taskmonitor.o)
 
