@@ -1,6 +1,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/pid.h>
+#include <linux/slab.h>
 #include <linux/moduleparam.h>
 #include <linux/kthread.h>
 
@@ -54,6 +55,22 @@ bool get_sample(struct task_monitor *tm, struct task_sample *sample,
 	return 1;
 }
 
+void save_sample(void)
+{
+	char buf[BUFSIZE];
+	int size = BUFSIZE;
+	struct task_sample *s= (struct task_sample *)
+		kmalloc(sizeof(struct task_sample),GFP_KERNEL);
+	if(!get_sample(&tm, s, buf, &size)) {
+		kfree(s);
+	} else {
+		mutex_lock(&(sample.mutex));
+		list_add_tail(&(s->list),&(sample.list));
+		mutex_unlock(&(sample.mutex));
+	}
+	return;
+}
+
 /****************************************/
 /***** kthread monitoring functions *****/
 /****************************************/
@@ -61,17 +78,23 @@ static struct task_struct *kthread;
 static bool is_kthread_running = 0;
 int monitor_fn(void *unused)
 {
-	int size;
-	char buf[BUFSIZE];
+	struct list_head *head = &sample.list;
+	struct list_head *pos = head->prev->prev;
 	while(!kthread_should_stop())
 	{
-		size = BUFSIZE;
-		if(get_sample(&tm, &sample, buf, &size)) {
-			pr_warn("%s",buf);
-			set_current_state(TASK_UNINTERRUPTIBLE);
-			schedule_timeout(HZ);
-		}
+		save_sample();
+		set_current_state(TASK_UNINTERRUPTIBLE);
+		schedule_timeout(HZ);
 	}
+	pr_warn("[taskmon] Cleaning monitoring context\n");
+	mutex_lock(&sample.mutex);
+	while(pos != head) {
+		kfree(list_entry(pos->next,struct task_sample,list));
+		pos = pos->prev;
+		pr_warn("[taskmon] Sample successuflly removed\n");
+	}
+	mutex_unlock(&sample.mutex);
+	mutex_destroy(&sample.mutex);
 	return 0;
 }
 
@@ -83,7 +106,8 @@ int monitor_pid(pid_t pid)
 		return -1;
 	}
 	pr_warn("[taskmon] Process %d found\n", target);
-	sample.list = LIST_HEAD_INIT(sample.list);
+	mutex_init(&(sample.mutex));
+	INIT_LIST_HEAD(&(sample.list));
 	kthread = kthread_run(monitor_fn, NULL, "monitor_fn");
 	is_kthread_running = 1;
 	return 0;
@@ -95,11 +119,24 @@ int monitor_pid(pid_t pid)
 ssize_t taskmon_show(struct kobject *kobj, struct kobj_attribute *attr,
 		char *buf)
 {
-	int ret = BUFSIZE;
-	char src[BUFSIZE];
-	if (!(get_sample(&tm, &sample,src,&ret)))
+	int size, ret = 0;
+	char tmp[BUFSIZE];
+	char *src = (char *)kmalloc(PAGE_SIZE, GFP_KERNEL);
+	struct task_sample *pos, *head=list_first_entry
+		(&sample.list,struct task_sample, list);
+	if(list_empty(&(sample.list)))
 		return 0;
-	strncpy(buf,src,BUFSIZE);
+	list_for_each_entry(pos, &head->list, list) {
+		size = BUFSIZE;
+		size = format_string(pos,tmp,size);
+		if((ret + size) >= PAGE_SIZE)
+			break;
+		strcat(src,tmp);
+		ret += size;
+		pr_warn("%s", buf);
+	}
+	strncpy(buf,src,PAGE_SIZE);
+	kfree(src);
 	return ret;
 }
 
@@ -137,7 +174,8 @@ int init_module(void)
 
 void cleanup_module(void)
 {
-	kthread_stop(kthread);
+	if (is_kthread_running)
+		kthread_stop(kthread);
 	sysfs_remove_file(kernel_kobj,&(taskmon.attr));
 	pr_warn("[taskmon] Unloading Task Monitor\n");
 }
