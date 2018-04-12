@@ -13,13 +13,15 @@
 .svn
 
 # PNL : codebases
+*.o.cmd
+*.ko
 PNL/myHome.img
 PNL/pnl-tp.img
 PNL/linux-4.9.82
-PNL/log.tt
+PNL/log.txt
 
 # Ignore massive folders
 PSESI
-FPGA1/DCC_Project
+FPGA1/Projet/DCC_Project
 FPGA1/TP1-3
 *.bin.txt
