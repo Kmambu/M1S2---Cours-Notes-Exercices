@@ -1,0 +1,31 @@
+\BOOKMARK [1][-]{section*.1}{VHDL}{}% 1
+\BOOKMARK [2][-]{section*.2}{Architecture structurelle}{section*.1}% 2
+\BOOKMARK [2][-]{section*.3}{Comportemental}{section*.1}% 3
+\BOOKMARK [1][-]{section*.4}{Machines \340 Etats}{}% 4
+\BOOKMARK [2][-]{section*.5}{M\351thode de r\351alisation}{section*.4}% 5
+\BOOKMARK [2][-]{section*.6}{Encodages}{section*.4}% 6
+\BOOKMARK [2][-]{section*.7}{M\351tastabilit\351}{section*.4}% 7
+\BOOKMARK [1][-]{section*.8}{M\351moires}{}% 8
+\BOOKMARK [2][-]{section*.9}{Classification}{section*.8}% 9
+\BOOKMARK [2][-]{section*.10}{M\351moires RAM}{section*.8}% 10
+\BOOKMARK [3][-]{section*.11}{Technologie SRAM}{section*.10}% 11
+\BOOKMARK [3][-]{section*.12}{Technologie DRAM}{section*.10}% 12
+\BOOKMARK [3][-]{section*.13}{Organisation interne}{section*.10}% 13
+\BOOKMARK [3][-]{section*.14}{Organisation externe}{section*.10}% 14
+\BOOKMARK [3][-]{section*.15}{Technologie SDRAM}{section*.10}% 15
+\BOOKMARK [3][-]{section*.16}{Technologie DDRAM}{section*.10}% 16
+\BOOKMARK [3][-]{section*.17}{Technologie QDRAM}{section*.10}% 17
+\BOOKMARK [2][-]{section*.18}{M\351moires ROM}{section*.8}% 18
+\BOOKMARK [3][-]{section*.19}{Types de ROM}{section*.18}% 19
+\BOOKMARK [1][-]{section*.20}{Structure d'un FPGA}{}% 20
+\BOOKMARK [1][-]{section*.21}{Circuits reprogrammables/Tests}{}% 21
+\BOOKMARK [2][-]{section*.22}{Bed-Of-Nails}{section*.21}% 22
+\BOOKMARK [2][-]{section*.23}{Boundary-Scan \(JTAG\)}{section*.21}% 23
+\BOOKMARK [3][-]{section*.24}{Composition du Boundary Scan}{section*.23}% 24
+\BOOKMARK [3][-]{section*.25}{TAP Controller}{section*.23}% 25
+\BOOKMARK [3][-]{section*.26}{Operations de IR}{section*.23}% 26
+\BOOKMARK [3][-]{section*.27}{Operations de DR}{section*.23}% 27
+\BOOKMARK [3][-]{section*.28}{EXTEST Mode}{section*.23}% 28
+\BOOKMARK [3][-]{section*.29}{SAMPLE/PRELOAD Mode}{section*.23}% 29
+\BOOKMARK [3][-]{section*.30}{INTEST Mode}{section*.23}% 30
+\BOOKMARK [3][-]{section*.31}{RUNBIST Mode}{section*.23}% 31
