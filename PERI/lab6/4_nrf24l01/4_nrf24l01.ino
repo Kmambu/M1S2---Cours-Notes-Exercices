@@ -2,8 +2,8 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include "RF24.h"
-#include "printf.h"
+#include <RF24.h>
+#include <printf.h>
 
 RF24 radio(9,10);
 byte addresses[][6] = {"0XXXX"};
@@ -114,6 +114,12 @@ struct Sensor_st {
 };
 
 void setup_Sensor(struct Sensor_st *ctx, int timer, unsigned long period) {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.display();
+  delay(2000);
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
   radio.begin();
   radio.setRetries(15,15);
   radio.setPALevel(RF24_PA_LOW);
@@ -126,7 +132,7 @@ void setup_Sensor(struct Sensor_st *ctx, int timer, unsigned long period) {
 
 void loop_Sensor(struct Sensor_st *ctx) {
   if (radio.available()) {
-    radio.read(buffer, sizeof(buffer));
+    radio.read(ctx->buffer, sizeof(ctx->buffer));
     display.setCursor(0,0);
     display.println(ctx->buffer);
     display.display();
@@ -135,7 +141,6 @@ void loop_Sensor(struct Sensor_st *ctx) {
 }
 
 //--------- definition de la tache Mess
-
 struct Mess_st {
   int timer;                                              // numéro de timer utilisé par WaitFor
   unsigned long period;                                             // periode d'affichage
@@ -160,6 +165,7 @@ struct Led_st Led1;
 struct Mess_st Mess1, Mess2;
 struct Oled_st Oled;
 struct Photo_st Photo;
+struct Sensor_st Sensor;
 
 void setup() {
   // put your setup code here, to run once:
@@ -168,8 +174,8 @@ void setup() {
   setup_Led(&Led1, 0, 100000, 13);                        // Led est exécutée toutes les 100ms 
   setup_Mess(&Mess1, 1, 1000000, "au revoir");              // Mess est exécutée toutes les secondes 
   setup_Mess(&Mess2, 2, 1500000, "merci");              // Mess est exécutée toutes les secondes 
-  setup_Oled(&Oled, 3, 1000000);
-  setup_Photo(&Photo, 5, 500000);
+  setup_Sensor(&Sensor, 3, 1000000);
+  setup_Photo(&Photo, 4, 500000);
 }
 
 void loop() {
@@ -178,6 +184,6 @@ void loop() {
   loop_Led(&Led1);                                        
   loop_Mess(&Mess1); 
   loop_Mess(&Mess2);
-  loop_Oled(&Oled); 
+  loop_Sensor(&Sensor); 
   loop_Photo(&Photo);
 }
