@@ -1,0 +1,57 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// File : pibus_block_device.h
+// Date : 22/03/2010
+// author : Alain Greiner 
+// This program is released under the GNU public license
+// Copyright UPMC - LIP6
+//////////////////////////////////////////////////////////////////////////////////////
+// This component is a simplified disk controller with a PIBUS interface.
+// This component can perform data transfers between one single file belonging 
+// to the host system and a buffer in the memory of the virtual system. 
+// The file name is an argument of the constructor, 
+// as well as the block size (bytes), and the access latency (cycles). 
+// This component has a DMA capability, and is both a target and an initiator.
+// Both read and write transfers are supported. An IRQ is optionally
+// asserted when the transfer is completed. 
+//
+// As a target this block device controler contains 8 memory mapped registers,
+// taking 32 bytes in the address space.
+// - BLOCK_DEVICE_BUFFER        0x00 (read/write)    Memory buffer base address.
+// - BLOCK_DEVICE_COUNT         0x04 (read/write)    Number of blocks to be transfered.
+// - BLOCK_DEVICE_LBA           0x08 (read/write)    Index of first block in the file.
+// - BLOCK_DEVICE_OP            0x0C (write-only)    Writing here starts the operation.
+// - BLOCK_DEVICE_STATUS        0x10 (read-only)     Block Device status.
+// - BLOCK_DEVICE_IRQ_ENABLE    0x14 (read/write)    IRQ enabled if non zero.
+// - BLOCK_DEVICE_SIZE          0x18 (read-only)     Number of addressable blocks.
+// - BLOCK_DEVICE_BLOCK_SIZE    0x1C (read_only)     Block size in bytes.
+//
+// The following operations codes are supported: 
+// - BLOCK_DEVICE_NOOP          No operation
+// - BLOCK_DEVICE_READ          From block device to memory
+// - BLOCK_DEVICE_WRITE         From memory to block device 
+//
+// The BLOCK_DEVICE_STATUS is actually defined by the master FSM state.
+// The following values are defined for device status:
+// -BLOCK_DEVICE_IDLE 		0
+// -BLOCK_DEVICE_BUSY 		1
+// -BLOCK_DEVICE_READ_SUCCESS 	2
+// -BLOCK_DEVICE_WRITE_SUCCESS	3
+// -BLOCK_DEVICE_READ_ERROR	4
+// -BLOCK_DEVICE_WRITE_ERROR	5
+//
+// In the 4 states READ_ERROR, READ_SUCCESS, WRITE_ERROR, WRITE_SUCCESS,
+// the IRQ is asserted (if it is enabled).
+// A read access to the BLOCK_DEVICE_STATUS in these 4 states reset 
+// the master FSM state to IDLE, and acknowledge the IRQ.
+// Any write access to registers BUFFER, COUNT, LBA, OP is ignored
+// if the device is not IDLE.
+///////////////////////////////////////////////////////////////////////////
+// This component has 6 "constructor" parameters :
+// - sc_module_name 	name	    : instance name
+// - unsigned int	tgtid	    : target index
+// - PibusSegmentTable 	segtab	    : segment table
+// - string             file_name   : file name on the host processor
+// - unsigned int	block_size  : number of bytes (128/256/512/1024)
+// - unsigned int	latency	    : access latency
+////////////////////////////////////////////////////////////////////////////
+
